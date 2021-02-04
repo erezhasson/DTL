@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Qf6m4+Q9cvYXs8EnbONjBX04DIuzJ3yyygnHEjcaMt9q/3qE5QqLb73txmHHQvyfhBLPVl4hzv1gFuA3gb3adw==",
+  "success": true,
+  "projectFilePath": "D:\\Projects\\DTL\\Server\\DTLServer\\WebServer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\danny\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "4mq2uucwe/dg8dsYNZR8kYnJ3158+6n0uSztveDUZUrG/jHbfNBlaUdY23mhMksGQhAw1PLINpm2X9VTk4er7A==",
+  "success": true,
+  "projectFilePath": "D:\\Projects\\DTL\\Server\\WebTester\\WebTester.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\danny\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
