@@ -26,7 +26,7 @@ MonoBehaviour:
   m_MinSize: {x: 910, y: 442}
   m_MaxSize: {x: 22005, y: 10021}
   vertical: 0
-  controlID: 58
+  controlID: 135
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -567,7 +567,7 @@ MonoBehaviour:
   m_LastFolders:
   - Assets
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\danny\OneDrive\Projects\Shabtay\WEB\UnityWebTester\UnityWebTester
+  m_LastProjectPath: D:\Projects\DTL\Server\UnityWebTester
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
@@ -627,9 +627,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 9a2e0000
+    m_LastClickedInstanceID: 11930
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 9a3200009e320000963200009c320000a0320000ca2d0000e42d0000922e0000802e00005810020016e90b0000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -720,5 +720,5 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_PreviewWindow: {fileID: 0}
-  m_LastInspectedObjectInstanceID: -1
+  m_LastInspectedObjectInstanceID: 11930
   m_LastVerticalScrollValue: 0

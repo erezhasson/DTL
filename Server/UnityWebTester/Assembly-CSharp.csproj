@@ -251,7 +251,7 @@
       <HintPath>D:/Program Files/Unity/2019.4.19f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>C:/Users/danny/OneDrive/Projects/Shabtay/WEB/UnityWebTester/UnityWebTester/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
+      <HintPath>D:/Projects/DTL/Server/UnityWebTester/Assets/JsonDotNet/Assemblies/Standalone/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Program Files/Unity/2019.4.19f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

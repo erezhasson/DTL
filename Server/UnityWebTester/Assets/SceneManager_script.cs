@@ -34,12 +34,12 @@ public class SceneManager_script : MonoBehaviour
         GOinpErrorMessage.SetActive(false); // false to hide, true to show;
         inpEnergyStarSize.text = "";
         inpEnergyStarAnimation.text = "";
-        StartCoroutine(ServerGateway.HttpPostWrapper(p_Controller: "DTGGame",
+        StartCoroutine(ServerGateway.HttpPostWrapper(p_Controller: "DTLGame",
             p_OP: "Get_Status",
-            p_jsnInData: "", OnDTGGame_Get_Status_Complete));
+            p_jsnInData: "", OnDTLGame_Get_Status_Complete));
 
     }
-    public void OnDTGGame_Get_Status_Complete(Newtonsoft.Json.Linq.JToken p_jsnOutData, string p_jsnError)
+    public void OnDTLGame_Get_Status_Complete(Newtonsoft.Json.Linq.JToken p_jsnOutData, string p_jsnError)
     {
         if (p_jsnError != null)
         {
@@ -58,7 +58,7 @@ public class SceneManager_script : MonoBehaviour
     public void btnResetEnergyStarSize_Clicked()
     {
         GOinpErrorMessage.SetActive(false); // false to hide, true to show;
-        StartCoroutine(ServerGateway.HttpPostWrapper(p_Controller: "DTGGame",
+        StartCoroutine(ServerGateway.HttpPostWrapper(p_Controller: "DTLGame",
           p_OP: "Set_ResetEnergyStarSize",
           p_jsnInData: "{\"EnergyStarSize\":\"" + inpSet_ResetEnergyStarSize.text + "\"}",
          OnResetEnergyStarSize_Complete));
