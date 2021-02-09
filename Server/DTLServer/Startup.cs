@@ -15,6 +15,11 @@ namespace DTL
 {
     public class Startup
     {
+        //CMD commands for enabling computer Ip and firewall rules
+        // netsh http add urlacl url=http://172.20.20.129:55239/ user=everyone
+        // netsh advfirewall firewall add rule name="IISExpressWeb" dir=in protocol=tcp localport=55239 remoteip=any action=allow
+        // Run VS as administrator
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -36,7 +41,7 @@ namespace DTL
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
