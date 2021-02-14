@@ -17,7 +17,7 @@ namespace WebTester
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmDTLMT4ControllerTester());
+            Application.Run(new frmDTLGameControllerTester());
         }
     }
 }

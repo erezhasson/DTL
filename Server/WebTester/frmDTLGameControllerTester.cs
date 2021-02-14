@@ -18,7 +18,7 @@ namespace WebTester
 
         private void btnGet_Status_Click(object sender, EventArgs e)
         {
-             Newtonsoft.Json.Linq.JToken jsnServerData = null;
+            string jsnServerData = null;
             string ServerError = "";
             if (HttpPostWrapper( p_Controller: "DTLGame",
                 p_OP: "Get_Status",
@@ -27,8 +27,11 @@ namespace WebTester
             {
                 if (jsnServerData != null)
                 {
-                    txtEnergyStarSize.Text = (string)jsnServerData["EnergyStarSize"];
-                    txtEnergyStarAnimation.Text = (string)jsnServerData["EnergyStarAnimation"];
+                    mdStatusDataFromServer mdStatusData =
+                         Newtonsoft.Json.JsonConvert.DeserializeObject<mdStatusDataFromServer>(jsnServerData);
+
+                    txtEnergyStarSize.Text = mdStatusData.EnergyStarSize;
+                    txtEnergyStarAnimation.Text = mdStatusData.EnergyStarAnimation;
                 }
 
 
@@ -42,7 +45,7 @@ namespace WebTester
 
         private void btnSet_ResetEnergyStarSize_Click(object sender, EventArgs e)
         {
-             Newtonsoft.Json.Linq.JToken ServerData = null;
+             string ServerData = null;
             string  ServerError="";
             if (HttpPostWrapper( p_Controller: "DTLGame",
                 p_OP: "Set_ResetEnergyStarSize",
@@ -53,10 +56,10 @@ namespace WebTester
                 MessageBox.Show("Error:" + ServerError);
 
         }
-   
-        public bool HttpPostWrapper( string p_Controller,
-            string p_OP,string p_jsnInData,
-            out Newtonsoft.Json.Linq.JToken p_jsnOutData,out string p_jsnError)
+
+        public bool HttpPostWrapper(string p_Controller,
+              string p_OP, string p_jsnInData,
+              out string p_jsnOutData, out string p_jsnError)
         {
             int HttpStatusCodeOK = (int)HttpStatusCode.OK;
 
@@ -75,30 +78,43 @@ namespace WebTester
                 var response = client.PostAsync(p_Controller, dataForHTTP).Result;
                 if (response.IsSuccessStatusCode)
                 {
+
                     string ServerResponseData = response.Content.ReadAsStringAsync().Result;
-                    Newtonsoft.Json.Linq.JContainer OServerData = 
-                     Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(ServerResponseData);
-                    string StatusCode=(string)OServerData["StatusCode"];
+                    mdDataFromServer mdServerData =
+                       Newtonsoft.Json.JsonConvert.DeserializeObject<mdDataFromServer>(ServerResponseData);
+
+
+                    string StatusCode = mdServerData.StatusCode;
                     if (StatusCode != HttpStatusCodeOK.ToString())
                     {
-                        p_jsnError = (string)OServerData["ErrorDescription"];
+                        p_jsnError = mdServerData.jsnDataOut;
                         return false;
                     }
 
-                    Newtonsoft.Json.Linq.JToken jsnDataOut = OServerData.Last;
-                    p_jsnOutData = jsnDataOut.First; ;
+                    p_jsnOutData = mdServerData.jsnDataOut;
                     return true;
                 }
                 else
                 {
                     p_jsnError = "{'Source:':'HttpPostWrapper','Message':' Http post failed with StatusCode:' " +
-                        response.StatusCode +" and ReasonPhrase:" + response.ReasonPhrase+"}";
+                        response.StatusCode + " and ReasonPhrase:" + response.ReasonPhrase + "}";
                     return false;
                 }
-     
+
             }
         }
 
 
     }
+}
+public class mdDataFromServer
+{
+    public string StatusCode;
+    public string jsnDataOut;
+}
+
+public class mdStatusDataFromServer
+{
+    public string EnergyStarSize;
+    public string EnergyStarAnimation;
 }

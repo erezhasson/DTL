@@ -26,23 +26,23 @@ namespace WebTester
 
         private void btnGet_Status_Click(object sender, EventArgs e)
         {
-             Newtonsoft.Json.Linq.JToken jsnServerData = null;
-            string ServerError = "";
-            if (HttpPostWrapper( p_Controller: "DTLMT4",
-                p_OP: "Get_Status",
-                p_jsnInData: "",
-                out jsnServerData, out ServerError))
-            {
-                if (jsnServerData != null)
-                {
-                    txtEnergyStarSize.Text = (string)jsnServerData["EnergyStarSize"];
-                    txtEnergyStarAnimation.Text = (string)jsnServerData["EnergyStarAnimation"];
-                }
+            // string jsnServerData = null;
+            //string ServerError = "";
+            //if (HttpPostWrapper( p_Controller: "DTLMT4",
+            //    p_OP: "Get_Status",
+            //    p_jsnInData: "",
+            //    out jsnServerData, out ServerError))
+            //{
+            //    if (jsnServerData != null)
+            //    {
+            //        txtEnergyStarSize.Text = (string)jsnServerData["EnergyStarSize"];
+            //        txtEnergyStarAnimation.Text = (string)jsnServerData["EnergyStarAnimation"];
+            //    }
 
 
-            }
-            else
-                MessageBox.Show("Error:" + ServerError);
+            //}
+            //else
+            //    MessageBox.Show("Error:" + ServerError);
 
 
 
@@ -50,7 +50,7 @@ namespace WebTester
 
         private void btnSet_Price_Click(object sender, EventArgs e)
         {
-             Newtonsoft.Json.Linq.JToken ServerData = null;
+             string ServerData = null;
             string  ServerError="";
             if (HttpPostWrapper( p_Controller: "DTLMT4",
                 p_OP: "Set_Price",
@@ -64,7 +64,7 @@ namespace WebTester
    
         public bool HttpPostWrapper( string p_Controller,
             string p_OP,string p_jsnInData,
-            out Newtonsoft.Json.Linq.JToken p_jsnOutData,out string p_jsnError)
+            out string p_jsnOutData,out string p_jsnError)
         {
             int HttpStatusCodeOK = (int)HttpStatusCode.OK;
 
@@ -83,18 +83,20 @@ namespace WebTester
                 var response = client.PostAsync(p_Controller, dataForHTTP).Result;
                 if (response.IsSuccessStatusCode)
                 {
+
                     string ServerResponseData = response.Content.ReadAsStringAsync().Result;
-                    Newtonsoft.Json.Linq.JContainer OServerData = 
-                     Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(ServerResponseData);
-                    string StatusCode=(string)OServerData["StatusCode"];
+                    mdDataFromServer mdServerData =
+                       Newtonsoft.Json.JsonConvert.DeserializeObject<mdDataFromServer>(ServerResponseData);
+
+
+                    string StatusCode = mdServerData.StatusCode;
                     if (StatusCode != HttpStatusCodeOK.ToString())
                     {
-                        p_jsnError = (string)OServerData["ErrorDescription"];
+                        p_jsnError = mdServerData.jsnDataOut;
                         return false;
                     }
 
-                    Newtonsoft.Json.Linq.JToken jsnDataOut = OServerData.Last;
-                    p_jsnOutData = jsnDataOut.First; ;
+                    p_jsnOutData = mdServerData.jsnDataOut;
                     return true;
                 }
                 else
@@ -110,3 +112,4 @@ namespace WebTester
 
     }
 }
+

@@ -10,9 +10,9 @@ C:\Users\danny\OneDrive\Projects\Shabtay\BL\BL\obj\Debug\netstandard2.0\BL.cspro
 D:\Projects\DTL\Server\BL\bin\Debug\netstandard2.0\BL.deps.json
 D:\Projects\DTL\Server\BL\bin\Debug\netstandard2.0\BL.dll
 D:\Projects\DTL\Server\BL\bin\Debug\netstandard2.0\BL.pdb
-D:\Projects\DTL\Server\BL\obj\Debug\netstandard2.0\BL.csprojAssemblyReference.cache
 D:\Projects\DTL\Server\BL\obj\Debug\netstandard2.0\BL.AssemblyInfoInputs.cache
 D:\Projects\DTL\Server\BL\obj\Debug\netstandard2.0\BL.AssemblyInfo.cs
 D:\Projects\DTL\Server\BL\obj\Debug\netstandard2.0\BL.csproj.CoreCompileInputs.cache
 D:\Projects\DTL\Server\BL\obj\Debug\netstandard2.0\BL.dll
 D:\Projects\DTL\Server\BL\obj\Debug\netstandard2.0\BL.pdb
+D:\Projects\DTL\Server\BL\obj\Debug\netstandard2.0\BL.csprojAssemblyReference.cache
