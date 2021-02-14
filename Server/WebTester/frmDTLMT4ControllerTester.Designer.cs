@@ -31,8 +31,8 @@ namespace WebTester
         {
             this.btnGet_Status = new System.Windows.Forms.Button();
             this.txtEnergyStarSize = new System.Windows.Forms.TextBox();
-            this.btnSet_ResetEnergyStarSize = new System.Windows.Forms.Button();
-            this.txtNewEnergyStarSize = new System.Windows.Forms.TextBox();
+            this.btnSet_Price = new System.Windows.Forms.Button();
+            this.txtNewPrice = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtEnergyStarAnimation = new System.Windows.Forms.TextBox();
@@ -57,22 +57,22 @@ namespace WebTester
             this.txtEnergyStarSize.Size = new System.Drawing.Size(237, 23);
             this.txtEnergyStarSize.TabIndex = 1;
             // 
-            // btnSet_ResetEnergyStarSize
+            // btnSet_Price
             // 
-            this.btnSet_ResetEnergyStarSize.Location = new System.Drawing.Point(1, 190);
-            this.btnSet_ResetEnergyStarSize.Name = "btnSet_ResetEnergyStarSize";
-            this.btnSet_ResetEnergyStarSize.Size = new System.Drawing.Size(164, 134);
-            this.btnSet_ResetEnergyStarSize.TabIndex = 2;
-            this.btnSet_ResetEnergyStarSize.Text = "Set_ResetEnergyStarSize";
-            this.btnSet_ResetEnergyStarSize.UseVisualStyleBackColor = true;
-            this.btnSet_ResetEnergyStarSize.Click += new System.EventHandler(this.btnSet_ResetEnergyStarSize_Click);
+            this.btnSet_Price.Location = new System.Drawing.Point(1, 190);
+            this.btnSet_Price.Name = "btnSet_Price";
+            this.btnSet_Price.Size = new System.Drawing.Size(164, 134);
+            this.btnSet_Price.TabIndex = 2;
+            this.btnSet_Price.Text = "Set_Price";
+            this.btnSet_Price.UseVisualStyleBackColor = true;
+            this.btnSet_Price.Click += new System.EventHandler(this.btnSet_Price_Click);
             // 
-            // txtNewEnergyStarSize
+            // txtNewPrice
             // 
-            this.txtNewEnergyStarSize.Location = new System.Drawing.Point(194, 247);
-            this.txtNewEnergyStarSize.Name = "txtNewEnergyStarSize";
-            this.txtNewEnergyStarSize.Size = new System.Drawing.Size(237, 23);
-            this.txtNewEnergyStarSize.TabIndex = 4;
+            this.txtNewPrice.Location = new System.Drawing.Point(194, 247);
+            this.txtNewPrice.Name = "txtNewPrice";
+            this.txtNewPrice.Size = new System.Drawing.Size(237, 23);
+            this.txtNewPrice.TabIndex = 4;
             // 
             // label1
             // 
@@ -105,9 +105,9 @@ namespace WebTester
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(204, 218);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(116, 15);
+            this.label3.Size = new System.Drawing.Size(60, 15);
             this.label3.TabIndex = 8;
-            this.label3.Text = "New Energy Star Size";
+            this.label3.Text = "New Price";
             // 
             // frmDTLMT4ControllerTester
             // 
@@ -119,8 +119,8 @@ namespace WebTester
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtEnergyStarAnimation);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txtNewEnergyStarSize);
-            this.Controls.Add(this.btnSet_ResetEnergyStarSize);
+            this.Controls.Add(this.txtNewPrice);
+            this.Controls.Add(this.btnSet_Price);
             this.Controls.Add(this.txtEnergyStarSize);
             this.Controls.Add(this.btnGet_Status);
             this.Name = "frmDTLMT4ControllerTester";
@@ -135,8 +135,8 @@ namespace WebTester
 
         private System.Windows.Forms.Button btnGet_Status;
         private System.Windows.Forms.TextBox txtEnergyStarSize;
-        private System.Windows.Forms.Button btnSet_ResetEnergyStarSize;
-        private System.Windows.Forms.TextBox txtNewEnergyStarSize;
+        private System.Windows.Forms.Button btnSet_Price;
+        private System.Windows.Forms.TextBox txtNewPrice;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtEnergyStarAnimation;

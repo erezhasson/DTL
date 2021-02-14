@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MT4Connector", "MT4Connector.csproj", "{D31D6362-1943-4853-AFF6-3DC3A8E49F71}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D31D6362-1943-4853-AFF6-3DC3A8E49F71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D31D6362-1943-4853-AFF6-3DC3A8E49F71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D31D6362-1943-4853-AFF6-3DC3A8E49F71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D31D6362-1943-4853-AFF6-3DC3A8E49F71}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {913FBE97-0674-4A9D-B845-FE15322733C6}
+	EndGlobalSection
+EndGlobal

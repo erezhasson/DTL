@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,52 +31,100 @@ public class SceneManager_script : MonoBehaviour
     }
     public void btnGet_Status_Clicked()
     {
-        GOinpErrorMessage.SetActive(false); // false to hide, true to show;
-        inpEnergyStarSize.text = "";
-        inpEnergyStarAnimation.text = "";
-        StartCoroutine(ServerGateway.HttpPostWrapper(p_Controller: "DTLGame",
-            p_OP: "Get_Status",
-            p_jsnInData: "", OnDTLGame_Get_Status_Complete));
+        try
+        {
+            GOinpErrorMessage.SetActive(false); // false to hide, true to show;
+            inpEnergyStarSize.text = "";
+            inpEnergyStarAnimation.text = "";
+            StartCoroutine(ServerGateway.HttpPostWrapper(p_Controller: "DTLGame",
+                p_OP: "Get_Status",
+                p_jsnInData: "", OnDTLGame_Get_Status_Complete));
+        }
+        catch (Exception ex)
+        {
+            inpErrorMessage.text = ex.Message;
+            GOinpErrorMessage.SetActive(true); // false to hide, true to show;
+
+        }
+
 
     }
-    public void OnDTLGame_Get_Status_Complete(Newtonsoft.Json.Linq.JToken p_jsnOutData, string p_jsnError)
+    public void OnDTLGame_Get_Status_Complete(string p_jsnOutData, string p_jsnError)
     {
-        if (p_jsnError != null)
+        try
         {
-            inpErrorMessage.text = p_jsnError;
+            if (p_jsnError != null)
+            {
+                inpErrorMessage.text = p_jsnError;
+                GOinpErrorMessage.SetActive(true); // false to hide, true to show;
+            }
+
+            else
+            {
+                mdStatusDataFromServer mdStatusData = JsonUtility.FromJson<mdStatusDataFromServer>(p_jsnOutData);
+
+                inpEnergyStarSize.text = mdStatusData.EnergyStarSize;
+                inpEnergyStarAnimation.text = mdStatusData.EnergyStarAnimation;
+
+            }
+        }
+        catch (Exception ex)
+        {
+            inpErrorMessage.text = ex.Message;
             GOinpErrorMessage.SetActive(true); // false to hide, true to show;
-        }
-
-        else
-        {
-            inpEnergyStarSize.text = (string)p_jsnOutData["EnergyStarSize"];
-            inpEnergyStarAnimation.text = (string)p_jsnOutData["EnergyStarAnimation"];
 
         }
+
 
     }
     public void btnResetEnergyStarSize_Clicked()
     {
-        GOinpErrorMessage.SetActive(false); // false to hide, true to show;
-        StartCoroutine(ServerGateway.HttpPostWrapper(p_Controller: "DTLGame",
-          p_OP: "Set_ResetEnergyStarSize",
-          p_jsnInData: "{\"EnergyStarSize\":\"" + inpSet_ResetEnergyStarSize.text + "\"}",
-         OnResetEnergyStarSize_Complete));
+        try
+        {
+            GOinpErrorMessage.SetActive(false); // false to hide, true to show;
+            StartCoroutine(ServerGateway.HttpPostWrapper(p_Controller: "DTLGame",
+              p_OP: "Set_ResetEnergyStarSize",
+              p_jsnInData: "{\"EnergyStarSize\":\"" + inpSet_ResetEnergyStarSize.text + "\"}",
+             OnResetEnergyStarSize_Complete));
+        }
+        catch (Exception ex)
+        {
+            inpErrorMessage.text = ex.Message;
+            GOinpErrorMessage.SetActive(true); // false to hide, true to show;
+
+        }
+
 
     }
-    public void OnResetEnergyStarSize_Complete(Newtonsoft.Json.Linq.JToken p_jsnOutData, string p_jsnError)
+    public void OnResetEnergyStarSize_Complete(string p_jsnOutData, string p_jsnError)
     {
-        if (p_jsnError != null)
+        try
         {
-            inpErrorMessage.text = p_jsnError;
+            if (p_jsnError != null)
+            {
+                inpErrorMessage.text = p_jsnError;
+                GOinpErrorMessage.SetActive(true); // false to hide, true to show;
+            }
+
+            else
+            {
+                inpSet_ResetEnergyStarSize.text = "Ok";
+            }
+        }
+        catch (Exception ex)
+        {
+            inpErrorMessage.text = ex.Message;
             GOinpErrorMessage.SetActive(true); // false to hide, true to show;
+
         }
 
-        else
-        {
-            inpSet_ResetEnergyStarSize.text = "Ok";
-        }
 
     }
 
 }
+public class mdStatusDataFromServer
+{
+    public string EnergyStarSize;
+    public string EnergyStarAnimation;
+}
+

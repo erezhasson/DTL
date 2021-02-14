@@ -38,6 +38,8 @@ namespace DTL.Controllers
                 Newtonsoft.Json.Linq.JContainer OInData = null;
                 if (jsnInData != null)
                     OInData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(jsnInData);
+                mdDataFromServerResponse mdServerData = new mdDataFromServerResponse();
+
                 switch (op)
                 {
                     case "Get_Status":
@@ -57,27 +59,73 @@ namespace DTL.Controllers
                             EnergyStarAnimation = "ShrinkAndResize";
                         }
                         clsApp.g_index = newIndexValue;
-                       return "{\"StatusCode\":\""+ HttpStatusCodeOK.ToString()+ "\",\"jsnDataOut\":{ \"EnergyStarSize\":" + newIndexValue.ToString() + ",\"EnergyStarAnimation\":\""+EnergyStarAnimation+"\"}}";
-   
+
+
+                        mdGetStatusDataFromServerResponse mdStatusData = new mdGetStatusDataFromServerResponse();
+                        mdStatusData.EnergyStarSize = newIndexValue.ToString();
+                        mdStatusData.EnergyStarAnimation = EnergyStarAnimation;
+                        string jsnStatusData= Newtonsoft.Json.JsonConvert.SerializeObject(mdStatusData);
+
+                        mdServerData.StatusCode = HttpStatusCodeOK.ToString();
+                        mdServerData.jsnDataOut = jsnStatusData;
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(mdServerData);
+
                     case "Set_ResetEnergyStarSize":
                         clsApp.g_index = Double.Parse((string)OInData["EnergyStarSize"]);
-                        return "{\"StatusCode\":\"" + HttpStatusCodeOK.ToString() + "\",\"jsnDataOut\":{ }}";
 
+                        mdServerData.StatusCode = HttpStatusCodeOK.ToString();
+                        mdServerData.jsnDataOut = "";
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(mdServerData);
+
+   
                 }
-                string ErrorDesc = $"DTLGameController.PostOP op = { op }, jsnInData={jsnInData},error.Message =op { op } not supported";
-                return "{\"StatusCode\":\"" + HttpStatusCodeInternalServerError.ToString() + "\",\"ErrorDescription\":" + ErrorDesc + "}";
+                throw new Exception($"Op { op } not supported");
+  
+ 
 
+               
                  }
             catch (Exception e)
             {
-                string ErrorDesc = $"DTLGameController.PostOP op = { op }, jsnInData={jsnInData},error.Message = { e.Message }";
-                ErrorDesc = ErrorDesc.Replace("\"", "'");
-                return "{\"StatusCode\":\"" + HttpStatusCodeInternalServerError.ToString() + "\",\"ErrorDescription\":\"" + ErrorDesc + "\"}";
+                mdErrorFromServerResponse mdErrorFromServer = new mdErrorFromServerResponse ();
+                mdErrorFromServer.Function = "DTLGameController.PostOP";
+                mdErrorFromServer.Op = op;
+                mdErrorFromServer.jsnInData = jsnInData;
+                mdErrorFromServer.ErrorMessage = e.Message;
 
+                string jsnErrorData = Newtonsoft.Json.JsonConvert.SerializeObject(mdErrorFromServer);
+
+                mdDataFromServerResponse mdServerDataError = new mdDataFromServerResponse();
+                mdServerDataError.StatusCode = HttpStatusCodeInternalServerError.ToString();
+                mdServerDataError.jsnDataOut = jsnErrorData;
+                return Newtonsoft.Json.JsonConvert.SerializeObject(mdServerDataError);
+
+
+
+   
             }
 
 
         }
 
     }
+}
+public class mdDataFromServerResponse
+{
+    public string StatusCode;
+    public string jsnDataOut;
+}
+
+public class mdGetStatusDataFromServerResponse
+{
+    public string EnergyStarSize;
+    public string EnergyStarAnimation;
+}
+
+public class mdErrorFromServerResponse
+{
+    public string Function;
+    public string Op;
+    public string jsnInData;
+    public string ErrorMessage;
 }

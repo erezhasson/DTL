@@ -21,7 +21,8 @@ namespace WebTester
         {
             InitializeComponent();
         }
-        const string c_Baseuri = "http://localhost:55239";
+        //const string c_Baseuri = "http://localhost:55239";
+        const string c_Baseuri = "http://digtolive.hopto.org:55239/DTLGame";
 
         private void btnGet_Status_Click(object sender, EventArgs e)
         {
@@ -47,15 +48,15 @@ namespace WebTester
 
         }
 
-        private void btnSet_ResetEnergyStarSize_Click(object sender, EventArgs e)
+        private void btnSet_Price_Click(object sender, EventArgs e)
         {
              Newtonsoft.Json.Linq.JToken ServerData = null;
             string  ServerError="";
             if (HttpPostWrapper( p_Controller: "DTLMT4",
-                p_OP: "Set_ResetEnergyStarSize",
-                p_jsnInData: "{\"EnergyStarSize\":\"" + txtNewEnergyStarSize.Text+"\"}",
+                p_OP: "Set_Price",
+                p_jsnInData: "{\"Price\":\"" + txtNewPrice.Text+"\"}",
                 out ServerData, out ServerError))
-                txtNewEnergyStarSize.Text = "Energy start size reset succeded";
+                txtNewPrice.Text = "Price set succeded";
             else
                 MessageBox.Show("Error:" + ServerError);
 

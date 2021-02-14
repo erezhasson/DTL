@@ -40,27 +40,9 @@ namespace DTL.Controllers
                     OInData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(jsnInData);
                 switch (op)
                 {
-                    case "Get_Status":
-                        Random random = new Random();
-                        int value = random.Next(0, 10);
-                        double newIndexValue = clsApp.g_index;
-                        string EnergyStarAnimation = "Resize";
-                        newIndexValue += Convert.ToDouble(value) / 10 - 0.5;
-                        if (newIndexValue > 10)
-                        {
-                            newIndexValue -= 5;
-                            EnergyStarAnimation = "ExplodeAndResize";
-                        }
-                        if (newIndexValue < 0)
-                        {
-                            newIndexValue = +5;
-                            EnergyStarAnimation = "ShrinkAndResize";
-                        }
-                        clsApp.g_index = newIndexValue;
-                       return "{\"StatusCode\":\""+ HttpStatusCodeOK.ToString()+ "\",\"jsnDataOut\":{ \"EnergyStarSize\":" + newIndexValue.ToString() + ",\"EnergyStarAnimation\":\""+EnergyStarAnimation+"\"}}";
-   
-                    case "Set_ResetEnergyStarSize":
-                        clsApp.g_index = Double.Parse((string)OInData["EnergyStarSize"]);
+     
+                    case "Set_Price":
+                        clsApp.g_price = Double.Parse((string)OInData["Price"]);
                         return "{\"StatusCode\":\"" + HttpStatusCodeOK.ToString() + "\",\"jsnDataOut\":{ }}";
 
                 }
