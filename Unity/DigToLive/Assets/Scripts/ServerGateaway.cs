@@ -7,11 +7,10 @@ public static class ServerGateway
      const int HttpStatusCodeOK = (int)System.Net.HttpStatusCode.OK;
 
      const string c_Baseuri = "http://localhost:55239";
-     //const string c_Baseuri = "http://digtolive.hopto.org:55239";
 
      public static IEnumerator HttpPostWrapper(string p_Controller,
-                string p_OP, string p_jsnInData,
-               System.Action<Newtonsoft.Json.Linq.JToken, string> callbackOnFinish)
+                 string p_OP, string p_jsnInData,
+                System.Action<string, string> callbackOnFinish)
      {
           WWWForm form = new WWWForm();
           form.AddField("op", p_OP);
@@ -27,22 +26,27 @@ public static class ServerGateway
           }
           else
           {
-               string ServerResponseData = www.downloadHandler.text;
+               string strServerResponseData = www.downloadHandler.text;
+               mdDataFromServer mdServerData = JsonUtility.FromJson<mdDataFromServer>(strServerResponseData);
 
-               Newtonsoft.Json.Linq.JContainer OServerData =
-               Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(ServerResponseData);
-               string StatusCode = (string)OServerData["StatusCode"];
+               string StatusCode = mdServerData.StatusCode;
                if (StatusCode != HttpStatusCodeOK.ToString())
                {
-                    string p_jsnError = (string)OServerData["ErrorDescription"];
+                    string p_jsnError = mdServerData.jsnDataOut;
                     callbackOnFinish(null, p_jsnError);
                }
                else
                {
-                    Newtonsoft.Json.Linq.JToken jsnDataOut = OServerData["jsnDataOut"];
+                    string jsnDataOut = mdServerData.jsnDataOut;
+
                     callbackOnFinish(jsnDataOut, null);
                }
           }
-
      }
+}
+
+public class mdDataFromServer
+{
+     public string StatusCode;
+     public string jsnDataOut;
 }
