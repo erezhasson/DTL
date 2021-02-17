@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "SHORG/pWpt+4TfgDPQm7G1GQYrggNJzOgUaJ2XEXWabimDOqKln5HoR5j+CVmJLUI5thFnxKp4tPrtvJfXOdZw==",
+  "success": true,
+  "projectFilePath": "D:\\Projects\\DTL\\MT4Agent\\MT4Connector\\MT4Connector\\MT4Connector.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\danny\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

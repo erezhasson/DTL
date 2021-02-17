@@ -12,11 +12,14 @@ using System.Net.Http;
 
 namespace MT4Connector
 {
- 
+
     public partial class frmMT4Connector : Form
     {
         const string c_Baseuri = "http://digtolive.hopto.org:55239/DTLGame";
         FileSystemWatcher watcher = new FileSystemWatcher();
+
+
+        bool bToServer = false, bToLog = false;
         public frmMT4Connector()
         {
             InitializeComponent();
@@ -24,8 +27,17 @@ namespace MT4Connector
         }
         private void btnStart_Click(object sender, EventArgs e)
         {
-            btnStart.Visible = false;
-            InitializeFileWatcher();
+            if (chkToServer.Checked || chkToLog.Checked)
+            {
+                btnStart.Visible = false;
+                bToServer = chkToServer.Checked;
+                bToLog = chkToLog.Checked;
+                chkToServer.Visible = false;
+                chkToLog.Visible = false;
+                InitializeFileWatcher();
+            }
+            else
+                MessageBox.Show("Check one of the options below");
 
         }
 
@@ -76,12 +88,18 @@ namespace MT4Connector
             switch (InData[0]) //Type of data
             {
                 case "Price":
-                    string Price = (InData[1]);
+                    string BidPrice = (InData[1]);
+                    string AskPrice = (InData[2]);
                     //Display price
-                    this.txtLastPrice.Invoke((MethodInvoker)delegate
+                    this.txtLastBidPrice.Invoke((MethodInvoker)delegate
                     {
                         // Running on the UI thread
-                        this.txtLastPrice.Text = Price;
+                        this.txtLastBidPrice.Text = BidPrice;
+                    });
+                    this.txtLastAskPrice.Invoke((MethodInvoker)delegate
+                    {
+                        // Running on the UI thread
+                        this.txtLastAskPrice.Text = AskPrice;
                     });
                     this.txtLastPriceTime.Invoke((MethodInvoker)delegate
                     {
@@ -89,19 +107,33 @@ namespace MT4Connector
                         this.txtLastPriceTime.Text = DateTime.Now.TimeOfDay.ToString();
                     });
 
-                    //Send to Server
-                    Newtonsoft.Json.Linq.JToken ServerData = null;
-                    string ServerError = "";
-                    if (HttpPostWrapper(p_Controller: "DTLMT4",
-                        p_OP: "Set_Price",
-                        p_jsnInData: "{\"Price\":\"" + Price + "\"}",
-                        out ServerData, out ServerError))
+                    if (bToServer)
                     {
-                       // txtNewPrice.Text = "Price set succeded";
+                        //Send to Server
+                        Newtonsoft.Json.Linq.JToken ServerData = null;
+                        string ServerError = "";
+                        if (HttpPostWrapper(p_Controller: "DTLMT4",
+                            p_OP: "Set_Price",
+                            p_jsnInData: "{\"BidPrice\":\"" + BidPrice + "\"+\"AskPrice\":\"" + AskPrice + "\"}",
+                            out ServerData, out ServerError))
+                        {
+                            // txtNewPrice.Text = "Price set succeded";
+                        }
+                        else
+                            MessageBox.Show("Error:" + ServerError);
                     }
-                    else
-                        MessageBox.Show("Error:" + ServerError);
 
+                    if (bToLog)
+                    {
+
+                        string path = "c:\\MT4DTLData\\" + DateTime.Now.ToString("yyyyMMdd") + ".dat";
+                        using (StreamWriter sw = File.AppendText(path))
+                        {
+                            sw.WriteLine(DateTime.Now.ToString("HH:mm:ss") + "," + BidPrice.ToString() + "," + AskPrice.ToString());
+                        }
+
+                        
+                    }
                     break;
                 default:
                     break;
@@ -110,7 +142,8 @@ namespace MT4Connector
         }
 
 
-        public bool HttpPostWrapper(string p_Controller,
+
+            public bool HttpPostWrapper(string p_Controller,
           string p_OP, string p_jsnInData,
           out Newtonsoft.Json.Linq.JToken p_jsnOutData, out string p_jsnError)
         {
@@ -155,6 +188,17 @@ namespace MT4Connector
             }
         }
 
+        private void btnTestLogCreation_Click(object sender, EventArgs e)
+        {
+            string path = "c:\\MT4DTLData\\"+ DateTime.Now.ToString("yyyyMMdd")+".dat";
+            using (StreamWriter sw = File.AppendText(path))
+            {
+                sw.WriteLine(DateTime.Now.ToString("HH:mm:ss") + ","+ "1.2133");
+            }
+            MessageBox.Show("Done");
+
+        }
+
         private void btnTest_Click(object sender, EventArgs e)
         {
             try
@@ -166,7 +210,7 @@ namespace MT4Connector
                     p_jsnInData: "{\"Price\":\"" + "22" + "\"}",
                     out ServerData, out ServerError))
                 {
-                    // txtNewPrice.Text = "Price set succeded";
+                    MessageBox.Show("Price set succeded");
                 }
                 else
                     MessageBox.Show("Error:" + ServerError);

@@ -1,0 +1,17 @@
+D:\Projects\DTL\Server\WebTester\bin\Release\netcoreapp3.1\WebTester.exe
+D:\Projects\DTL\Server\WebTester\bin\Release\netcoreapp3.1\WebTester.deps.json
+D:\Projects\DTL\Server\WebTester\bin\Release\netcoreapp3.1\WebTester.runtimeconfig.json
+D:\Projects\DTL\Server\WebTester\bin\Release\netcoreapp3.1\WebTester.runtimeconfig.dev.json
+D:\Projects\DTL\Server\WebTester\bin\Release\netcoreapp3.1\WebTester.dll
+D:\Projects\DTL\Server\WebTester\bin\Release\netcoreapp3.1\WebTester.pdb
+D:\Projects\DTL\Server\WebTester\bin\Release\netcoreapp3.1\Newtonsoft.Json.dll
+D:\Projects\DTL\Server\WebTester\obj\Release\netcoreapp3.1\WebTester.csprojAssemblyReference.cache
+D:\Projects\DTL\Server\WebTester\obj\Release\netcoreapp3.1\WebTester.frmDTLGameControllerTester.resources
+D:\Projects\DTL\Server\WebTester\obj\Release\netcoreapp3.1\WebTester.csproj.GenerateResource.cache
+D:\Projects\DTL\Server\WebTester\obj\Release\netcoreapp3.1\WebTester.AssemblyInfoInputs.cache
+D:\Projects\DTL\Server\WebTester\obj\Release\netcoreapp3.1\WebTester.AssemblyInfo.cs
+D:\Projects\DTL\Server\WebTester\obj\Release\netcoreapp3.1\WebTester.csproj.CoreCompileInputs.cache
+D:\Projects\DTL\Server\WebTester\obj\Release\netcoreapp3.1\WebTester.csproj.CopyComplete
+D:\Projects\DTL\Server\WebTester\obj\Release\netcoreapp3.1\WebTester.dll
+D:\Projects\DTL\Server\WebTester\obj\Release\netcoreapp3.1\WebTester.pdb
+D:\Projects\DTL\Server\WebTester\obj\Release\netcoreapp3.1\WebTester.genruntimeconfig.cache
