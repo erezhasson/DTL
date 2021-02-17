@@ -24,6 +24,7 @@ public class SceneManager : MonoBehaviour
                StartCoroutine(ServerGateway.HttpPostWrapper(p_Controller: "DTLGame",
             p_OP: "Get_Status",
             p_jsnInData: "", OnDTLGame_Get_Status_Complete));
+
                updatingTime = 2f;
           }
           

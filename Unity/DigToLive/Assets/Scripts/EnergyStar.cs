@@ -35,6 +35,7 @@ public class EnergyStar : MonoBehaviour
      {
           m_StarPS = GetComponent<ParticleSystem>();
           energyShape = m_StarPS.shape;
+          m_lastSize = m_Size;
      }
 
      // Update is called once per frame
@@ -56,6 +57,7 @@ public class EnergyStar : MonoBehaviour
           }
 
           energyShape.radius = m_Size;
+          m_lastSize = m_Size;
           Debug.Log(m_Size);
      }
 
@@ -71,6 +73,8 @@ public class EnergyStar : MonoBehaviour
 
      private void explode()
      {
+          float explodingTime = 2f;
+
           while (m_StarPS.startSpeed < 20)
           {
                m_StarPS.startSpeed += 0.5f;
