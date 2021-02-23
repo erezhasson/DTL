@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Oren\\source\\repos\\ML\\DTLExpert.csproj": {}
+    "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLExpert\\DTLExpert.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Oren\\source\\repos\\ML\\DTLExpert.csproj": {
+    "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLExpert\\DTLExpert.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Oren\\source\\repos\\ML\\DTLExpert.csproj",
+        "projectUniqueName": "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLExpert\\DTLExpert.csproj",
         "projectName": "DTLExpert",
-        "projectPath": "C:\\Users\\Oren\\source\\repos\\ML\\DTLExpert.csproj",
+        "projectPath": "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLExpert\\DTLExpert.csproj",
         "packagesPath": "C:\\Users\\Oren\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Oren\\source\\repos\\ML\\obj\\",
+        "outputPath": "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLExpert\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -6,8 +6,7 @@ namespace DTLExpert
 {
      class Expert
      {
-          private static List<double> m_Prices = new List<double>();
-          private static List<double> m_Sizes = new List<double>();
+          public static ExpertInput m_Input = new ExpertInput();
 
           public static void readData(string filePath)
           {
@@ -15,38 +14,36 @@ namespace DTLExpert
 
                foreach (string line in fileLines)
                {
-                    m_Prices.Add(double.Parse(line));
+                    m_Input.m_Prices.Add(double.Parse(line));
                }
           }
 
-          private static void NormalizePrices()
+          private static List<NormalizedOutput> NormalizePrices()
           {
+               List<double> prices = m_Input.m_Prices;
+               List<NormalizedOutput> normalizedOutputList = new List<NormalizedOutput>();
                bool bReach0, bReach10;
                double factor = 2.5 / (0.5 * 0.0018);
                double Chg = Math.Round(5 / factor, 5);
-               double PrevLASTReach = m_Prices[0];
-               double NextDown = m_Prices[0] - Chg;
-               double NextUp = m_Prices[0] + Chg;
+               double PrevLASTReach = prices[0];
+               double NextDown = prices[0] - Chg;
+               double NextUp = prices[0] + Chg;
                double LASTReach;    
                double Size;
 
-               m_Sizes.Add(5);
-               for (int i = 0; i < m_Prices.Count; i++)
+               
+               for (int i = 0; i < prices.Count; i++)
                {
-                    bReach0 = m_Prices[i] < NextDown;
-                    bReach10 = m_Prices[i] > NextUp;
+                    bReach0 = prices[i] < NextDown;
+                    bReach10 = prices[i] > NextUp;
                     LASTReach = bReach10 ? NextUp : (bReach0 ? NextDown : PrevLASTReach);
-                    Size = factor * (m_Prices[i] - (bReach0 || bReach10 ? PrevLASTReach : LASTReach)) + 5;
+                    Size = factor * (prices[i] - (bReach0 || bReach10 ? PrevLASTReach : LASTReach)) + 5;
                     Size = Math.Round(Size, 2);
                     NextDown = LASTReach - Chg;
                     NextUp = LASTReach + Chg;
-
                     PrevLASTReach = LASTReach;
+                    normalizedOutputList.Add(new NormalizedOutput(Size, bReach10, bReach0));
 
-                    if (i != 0)
-                    {
-                         m_Sizes.Add(Size);
-                    }
 
                     //System.Console.Write(m_Prices[i].ToString() + ",");
                     //System.Console.Write(LASTReach.ToString() + ",");
@@ -55,7 +52,9 @@ namespace DTLExpert
                     //System.Console.Write(NextDown.ToString() + ",");
                     //System.Console.Write(NextUp.ToString() + ",");
                     //System.Console.WriteLine(Size.ToString() + ",");
-               }                        
+               }
+
+               return normalizedOutputList;
           }
 
           private static void TrainExpert()
@@ -73,6 +72,25 @@ namespace DTLExpert
                // EvaluateExpert()
                // Prediction(Size) -> DIR(1, -1, 0 = do nothing), Return value, Abort value
 
+          }
+     }
+
+     class ExpertInput
+     {
+          public List<double> m_Prices = new List<double>();
+     }
+
+     class NormalizedOutput
+     {
+          public double Size;
+          public bool bEarnedList;
+          public bool bAbortedList;
+
+          public NormalizedOutput(double size, bool bEarnedList, bool bAbortedList)
+          {
+               Size = size;
+               this.bEarnedList = bEarnedList;
+               this.bAbortedList = bAbortedList;
           }
      }
 }

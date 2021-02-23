@@ -11,3 +11,16 @@ C:\Users\Oren\source\repos\ML\obj\Debug\netcoreapp3.1\DTLExpert.dll
 C:\Users\Oren\source\repos\ML\obj\Debug\netcoreapp3.1\DTLExpert.pdb
 C:\Users\Oren\source\repos\ML\obj\Debug\netcoreapp3.1\DTLExpert.genruntimeconfig.cache
 C:\Users\Oren\source\repos\ML\obj\Debug\netcoreapp3.1\DTLExpert.csprojAssemblyReference.cache
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLExpert\bin\Debug\netcoreapp3.1\DTLExpert.exe
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLExpert\bin\Debug\netcoreapp3.1\DTLExpert.deps.json
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLExpert\bin\Debug\netcoreapp3.1\DTLExpert.runtimeconfig.json
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLExpert\bin\Debug\netcoreapp3.1\DTLExpert.runtimeconfig.dev.json
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLExpert\bin\Debug\netcoreapp3.1\DTLExpert.dll
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLExpert\bin\Debug\netcoreapp3.1\DTLExpert.pdb
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLExpert\obj\Debug\netcoreapp3.1\DTLExpert.csprojAssemblyReference.cache
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLExpert\obj\Debug\netcoreapp3.1\DTLExpert.AssemblyInfoInputs.cache
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLExpert\obj\Debug\netcoreapp3.1\DTLExpert.AssemblyInfo.cs
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLExpert\obj\Debug\netcoreapp3.1\DTLExpert.csproj.CoreCompileInputs.cache
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLExpert\obj\Debug\netcoreapp3.1\DTLExpert.dll
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLExpert\obj\Debug\netcoreapp3.1\DTLExpert.pdb
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLExpert\obj\Debug\netcoreapp3.1\DTLExpert.genruntimeconfig.cache
