@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLML\\DTLML\\DTLML.csproj": {}
+    "D:\\Projects\\DTL\\TempProjects\\DTLML\\DTLML\\DTLML.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLML\\DTLML\\DTLML.csproj": {
+    "D:\\Projects\\DTL\\TempProjects\\DTLML\\DTLML\\DTLML.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLML\\DTLML\\DTLML.csproj",
+        "projectUniqueName": "D:\\Projects\\DTL\\TempProjects\\DTLML\\DTLML\\DTLML.csproj",
         "projectName": "DTLML",
-        "projectPath": "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLML\\DTLML\\DTLML.csproj",
-        "packagesPath": "C:\\Users\\Oren\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLML\\DTLML\\obj\\",
+        "projectPath": "D:\\Projects\\DTL\\TempProjects\\DTLML\\DTLML\\DTLML.csproj",
+        "packagesPath": "C:\\Users\\danny\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\DTL\\TempProjects\\DTLML\\DTLML\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Oren\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danny\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

@@ -1,0 +1,13 @@
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLML\DTLML\obj\Debug\netcoreapp3.1\DTLML.csprojAssemblyReference.cache
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLML\DTLML\obj\Debug\netcoreapp3.1\DTLML.AssemblyInfoInputs.cache
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLML\DTLML\obj\Debug\netcoreapp3.1\DTLML.AssemblyInfo.cs
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLML\DTLML\obj\Debug\netcoreapp3.1\DTLML.csproj.CoreCompileInputs.cache
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLML\DTLML\bin\Debug\netcoreapp3.1\DTLML.exe
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLML\DTLML\bin\Debug\netcoreapp3.1\DTLML.deps.json
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLML\DTLML\bin\Debug\netcoreapp3.1\DTLML.runtimeconfig.json
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLML\DTLML\bin\Debug\netcoreapp3.1\DTLML.runtimeconfig.dev.json
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLML\DTLML\bin\Debug\netcoreapp3.1\DTLML.dll
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLML\DTLML\bin\Debug\netcoreapp3.1\DTLML.pdb
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLML\DTLML\obj\Debug\netcoreapp3.1\DTLML.dll
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLML\DTLML\obj\Debug\netcoreapp3.1\DTLML.pdb
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\DTLML\DTLML\obj\Debug\netcoreapp3.1\DTLML.genruntimeconfig.cache
