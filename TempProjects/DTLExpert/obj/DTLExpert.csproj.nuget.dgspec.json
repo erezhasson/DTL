@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLExpert\\DTLExpert.csproj": {}
+    "D:\\Projects\\DTL\\TempProjects\\DTLExpert\\DTLExpert.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLExpert\\DTLExpert.csproj": {
+    "D:\\Projects\\DTL\\TempProjects\\DTLExpert\\DTLExpert.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLExpert\\DTLExpert.csproj",
+        "projectUniqueName": "D:\\Projects\\DTL\\TempProjects\\DTLExpert\\DTLExpert.csproj",
         "projectName": "DTLExpert",
-        "projectPath": "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLExpert\\DTLExpert.csproj",
-        "packagesPath": "C:\\Users\\Oren\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Oren\\Desktop\\לימודים\\Git\\DTL\\TempProjects\\DTLExpert\\obj\\",
+        "projectPath": "D:\\Projects\\DTL\\TempProjects\\DTLExpert\\DTLExpert.csproj",
+        "packagesPath": "C:\\Users\\danny\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\DTL\\TempProjects\\DTLExpert\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Oren\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\danny\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
