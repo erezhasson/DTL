@@ -14,3 +14,13 @@ C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\TrainQA\WindowsFormsAp
 C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\Oren\Desktop\לימודים\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csprojAssemblyReference.cache
+C:\Users\Oren\Desktop\Projects\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\Oren\Desktop\Projects\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\Oren\Desktop\Projects\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csprojAssemblyReference.cache
+C:\Users\Oren\Desktop\Projects\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\Oren\Desktop\Projects\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\Oren\Desktop\Projects\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+C:\Users\Oren\Desktop\Projects\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\Oren\Desktop\Projects\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\Oren\Desktop\Projects\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
