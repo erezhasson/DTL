@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
@@ -16,55 +17,201 @@ namespace WindowsFormsApp1
                InitializeComponent();
           }
 
-          //int[] Sizes = { 5, 6, 7, 6, 5, 4, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 5, 6, 7, 8, 9, 10 };
-          int[] Sizes = { 5,6,7,6,5,4,3,4,5,6,7,8,7,6,5,4,5,6,4,2,1,0 };
-          Double[,,,] Gain = new Double[9, 2, 11, 11]; //Position1-9, dir {-1,1}, Return 0-10, Abort 0-10
-          int[,] SizeMovesCount = new int[10, 11]; //Position1-9, Position1-9
-          int[,,] calcPositions = new int[11,11,11]; //Position0-10, Return 0-10, Abort 0-10
-          Double[,] SizeMovesStatistics = new Double[10, 11]; //Position1-9, Position1-9
-          ActionWithDir[] ActionsWithDir = new ActionWithDir[10]; //Position1-9
-          ActionWithNoDir[] ActionsWithNoDir = new ActionWithNoDir[10]; //Position1-9
-          Action[] BestActions = new Action[10]; //Position1-9
+        //int[] Sizes = { 5, 6, 7, 6, 5, 4, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 5, 6, 7, 8, 9, 10 };
+        //int[] Sizes = { 5, 6, 7, 6, 5, 4, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 5, 6, 4, 2, 1, 0 };
+        //int[] Sizes = { 5,6,7,6,5,4,3,4,5,6,7,8,7,6,-9,5,4,5,6,4,2,1,0 , 5, 6, 7, 6, 5, 4, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 5, 6, 7, 8, 9, 10 };
+        //int[] Sizes = { 50, 60, 70, 60, 50, 40, 30, 40, 50, 60, 70, 80, 70, 60, -9, 50, 40, 50, 60, 40, 20, 10, 0, 50, 60, 70, 60, 50, 40, 30, 40, 50, 60, 70, 80, 70, 60, 50, 40, 50, 60, 70, 80, 90, 100 };
+          double[] Sizes;
+          Double[,,,] Gain = new Double[99, 2, 101, 101]; //Position1-99, dir {-1,1}, Return 0-100, Abort 0-100
+          int[,] SizeMovesCount = new int[100, 101]; //Position1-99, Position1-100
+          int[,,] tmpLastCalcIndexInArray = new int[101,101,101]; //Position0-100, Return 0-100, Abort 0-100
+          Double[,] SizeMovesStatistics = new Double[100, 101]; //Position1-99, Position1-100
+          ActionWithDir[] ActionsWithDir = new ActionWithDir[100]; //Position1-99
+          ActionWithNoDir[] ActionsWithNoDir = new ActionWithNoDir[100]; //Position1-99
+          Action[] BestActions = new Action[100]; //Position1-99
 
-          private void btnGo_Click(object sender, EventArgs e)
-          {
-               //CalcGain(8, -1, 2, 10,20); for testing
+        private void btnGo_Click(object sender, EventArgs e)
+        {
+                //Get sizes data
+                GetSizesData();
+                //Testing start
+                //int i75Pos = -9;
+                //for (i75Pos = 1; i75Pos < Sizes.Length - 1; i75Pos++)
+                //        if (Sizes[i75Pos]>=75)
+                //            break ;
+                //CalcGain(Sizes[i75Pos], 1, 95, 0, i75Pos+1);
+                //Terting end
 
-               //Initilize Gain to 0
-               InitializeGain();//Initilize Gain to 0
-               InitializeCalcPositions();// Initilize Calc Position to -1
-               CalcAllGains();
-               //PrintGains();
-               //PrintCalcPositions();
+                //Initilize Gain to 0
+                InitializeGain();//Initilize Gain to 0
+                InitializetmpLastcalcPositions();// Initilize Calc Position to -1
+                CalcAllGains();
+                //PrintGains();
+                //PrintCalcPositions();
 
-               InitializeSizeMovesCount();
-               CalcSizeMovesCount();
-               CalcSizeMovesStatistics();
-            // PrintSizeMovesStatistics();
+                InitializeSizeMovesCount();
+                CalcSizeMovesCount();
+                InitializeSizeMovesStatistics();
+                CalcSizeMovesStatistics();
+                // PrintSizeMovesStatistics();
 
+                InitializeActionWithDir();
                 SetActionWithDir();
+                InitializeActionsWithNoDir();
                 SetActionsWithNoDir();
-               SetBestActions();
-               PrintBestAction();
+                InitializeBestActions();
+                SetBestActions();
+                PrintBestAction();
 
-               MessageBox.Show("done...");
+                MessageBox.Show("done...");
           }
 
+        private void GetSizesData ()
+        {
+            string[] lines = File.ReadAllLines("D:\\Projects\\DTL\\TempProjects\\TrainQA\\SizeData.csv");
+            Sizes= new double[lines.Length-1];
+            int pos = -1;
+            foreach (string line in lines)
+            {
+                if (pos==-1)
+                {
+                    pos ++;
+                    continue; //Skip header
+                }
+
+                double dSize=-9;
+                if (Double.TryParse(line, out dSize))
+                    Sizes[pos] = dSize;
+                pos++;
+            }
+
+        }
+        private void InitializeGain()
+        {
+            for (int position = 1; position < 100; position++)
+            {
+                for (int dir = -1; dir < 2; dir += 2)
+                {
+                    for (int Returnn = 0; Returnn <= 100; Returnn++)
+                    {
+                        for (int abort = 0; abort <= 100; abort++)
+
+                        {
+                            SetGain(p_iPosition: position, p_dir: dir, p_Returnn: Returnn, p_abort: abort, p_value: 0);
+                        }
+                    }
+                }
+            }
+
+        }
+        private void InitializetmpLastcalcPositions()
+        {
+            for (int i = 0; i < 101; i++)
+            {
+                for (int j = 0; j < 101; j++)
+                {
+                    for (int k = 0; k < 101; k++)
+                    {
+                        tmpLastCalcIndexInArray[i, j, k] = -1;
+                    }
+                }
+            }
+        }
+        private void CalcAllGains()
+        {
+            int ipbSize = 0;
+            progressBar1.Value = ipbSize;
+  
+            for (int iSize = 0; iSize <= Sizes.Length - 1; iSize++)
+            {
+                int inewpbSize = 100 * iSize / (Sizes.Length - 1) ;
+                if (inewpbSize> ipbSize+1)
+                {
+                    ipbSize = inewpbSize;
+                    progressBar1.Value = ipbSize;
+                    lblPB.Text = (iSize+1).ToString() + "/" + Sizes.Length.ToString();
+                    Application.DoEvents();
+
+                }
+
+                double dposition = Sizes[iSize];
+                int iposition = dTOi(dposition);
+                for (int dir = -1; dir < 2; dir += 2)
+                {
+                    for (int Returnn = 0; Returnn <= 100; Returnn++)
+                    {
+                        for (int abort = 0; abort <= 100; abort++)
+                        {
+                            if ((dir == 1 && Returnn > iposition && abort < iposition)
+                                || (dir == -1 && Returnn < iposition && abort > iposition))
+                            {
+                                if (iSize > tmpLastCalcIndexInArray[iposition, Returnn, abort])
+                                {
+                                    double GainToSet = CalcGain(p_dPosition: dposition, p_dir: dir, p_Returnn: Returnn, p_abort: abort, p_StartiSize: iSize + 1);
+                                    AddToGain(p_dPosition: dposition, p_dir: dir, p_Returnn: Returnn, p_abort: abort, p_value: GainToSet);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        private double CalcGain(double  p_dPosition, int p_dir, int p_Returnn, int p_abort, int p_StartiSize)
+        {
+            int iposition = dTOi(p_dPosition);
+            double dGain = 0;
+
+            if (p_StartiSize > tmpLastCalcIndexInArray[iposition, p_Returnn, p_abort])
+            {
+                for (int iSize = p_StartiSize; iSize < Sizes.Length; iSize++)
+                {
+                    double dsize = Sizes[iSize];
+                    bool bEndPoition = false;
+
+                    if (dsize >= 100 || dsize <= 0) //Forced abort 
+                        bEndPoition = true;
+
+                    if (p_dir == 1 && p_Returnn <= dsize)
+                        bEndPoition = true;
+
+                     if (p_dir == 1 && dsize <= p_abort)
+                        bEndPoition = true;
+   
+                    if (p_dir == -1 && dsize <= p_Returnn)
+                        bEndPoition = true;
+
+                    if (p_dir == -1 && dsize >= p_abort)
+                        bEndPoition = true;
+
+                    if (bEndPoition)
+                    {
+                        if (dsize != -9)
+                            dGain = p_dir * (dsize - p_dPosition) - 5;
+
+                        tmpLastCalcIndexInArray[iposition, p_Returnn, p_abort] = iSize + 1;
+                        break;
+                    }
+
+                }
+            }
+
+            return dGain;
+        }
         private void PrintGains()
         {
             {
-                for (int position = 1; position < 10; position++)
+                for (int position = 1; position < 100; position++)
                 {
                     for (int dir = -1; dir < 2; dir += 2)
                     {
-                        for (int Returnn = 0; Returnn <= 10; Returnn++)
+                        for (int Returnn = 0; Returnn <= 100; Returnn++)
                         {
-                            for (int abort = 0; abort <= 10; abort++)
+                            for (int abort = 0; abort <= 100; abort++)
 
                             {
-                                Debug.Print
-                                    (position + "," + dir + ", " + Returnn + ", " + abort + "," +
-                                         GetGain(p_Position: position, p_dir: dir, p_Returnn: Returnn, p_abort: abort));
+                                double dGain = GetGain(p_iPosition: position, p_dir: dir, p_Returnn: Returnn, p_abort: abort);
+                                if (dGain>0)
+                                         Debug.Print   (position + "," + dir + ", " + Returnn + ", " + abort + "," + dGain.ToString());
                             }
                         }
                     }
@@ -78,117 +225,23 @@ namespace WindowsFormsApp1
         {
             Debug.Print("Position\tReturn\tAbort\tIndex\n");
 
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < 101; i++)
             {
-                for (int j = 0; j < 11; j++)
+                for (int j = 0; j < 101; j++)
                 {
-                    for (int k = 0; k < 11; k++)
+                    for (int k = 0; k < 101; k++)
                     {
-                        Debug.Print(i + "\t\t" + j + "\t\t" + k + "\t\t" + calcPositions[i, j, k]);
+                        Debug.Print(i + "\t\t" + j + "\t\t" + k + "\t\t" + tmpLastCalcIndexInArray[i, j, k]);
                     }
                     Debug.Print("\n");
                 }
             }
         }
-        private void InitializeGain()
-        {
-            for (int position = 1; position < 10; position++)
-            {
-                for (int dir = -1; dir < 2; dir += 2)
-                {
-                    for (int Returnn = 0; Returnn <= 10; Returnn++)
-                    {
-                        for (int abort = 0; abort <= 10; abort++)
-
-                        {
-                            SetGain(p_Position: position, p_dir: dir, p_Returnn: Returnn, p_abort: abort, p_value: 0);
-                        }
-                    }
-                }
-            }
-
-        }
-        private void InitializeCalcPositions()
-        {
-            for (int i = 0; i < 11; i++)
-            {
-                for (int j = 0; j < 11; j++)
-                {
-                    for (int k = 0; k < 11; k++)
-                    {
-                        calcPositions[i, j, k] = -1;
-                    }
-                }
-            }
-        }
-        private void CalcAllGains()
-        {
-            for (int iSize = 0; iSize <= 21 - 1; iSize++)
-            {
-                int position = Sizes[iSize];
-                for (int dir = -1; dir < 2; dir += 2)
-                {
-                    for (int Returnn = 0; Returnn <= 10; Returnn++)
-                    {
-                        for (int abort = 0; abort <= 10; abort++)
-                        {
-                            if ((dir == 1 && Returnn > position && abort < position)
-                                || (dir == -1 && Returnn < position && abort > position))
-                            {
-                                if (iSize > calcPositions[position, Returnn, abort])
-                                {
-                                    double GainToSet = CalcGain(p_Position: position, p_dir: dir, p_Returnn: Returnn, p_abort: abort, p_StartiSize: iSize + 1);
-                                    AddToGain(p_Position: position, p_dir: dir, p_Returnn: Returnn, p_abort: abort, p_value: GainToSet);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        private double CalcGain(int p_Position, int p_dir, int p_Returnn, int p_abort, int p_StartiSize)
-        {
-            double dGain = 0;
-
-            if (p_StartiSize > calcPositions[p_Position, p_Returnn, p_abort])
-            {
-                for (int iSize = p_StartiSize; iSize <= 21; iSize++)
-                {
-                    int size = Sizes[iSize];
-                    if (p_dir == 1 && p_Returnn <= size)
-                    {
-                        dGain = size - p_Position - 0.5;
-                        calcPositions[p_Position, p_Returnn, p_abort] = iSize + 1;
-                        break;
-                    }
-                    if (p_dir == 1 && size <= p_abort)
-                    {
-                        dGain = size - p_Position - 0.5;
-                        calcPositions[p_Position, p_Returnn, p_abort] = iSize + 1;
-                        break;
-                    }
-                    if (p_dir == -1 && size <= p_Returnn)
-                    {
-                        dGain = p_Position - size - 0.5;
-                        calcPositions[p_Position, p_Returnn, p_abort] = iSize + 1;
-                        break;
-                    }
-                    if (p_dir == -1 && size >= p_abort)
-                    {
-                        dGain = p_Position - size - 0.5;
-                        calcPositions[p_Position, p_Returnn, p_abort] = iSize + 1;
-                        break;
-                    }
-                }
-            }
-
-            return dGain;
-        }
         private void InitializeSizeMovesCount()
         {
-            for (int SizeFrom = 1; SizeFrom < 10; SizeFrom++)
+            for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
             {
-                for (int SizeTo = 1; SizeTo < 10; SizeTo++)
+                for (int SizeTo = 1; SizeTo < 100; SizeTo++)
                 {
                     SizeMovesCount[SizeFrom, SizeTo] = 0;
                 }
@@ -197,28 +250,41 @@ namespace WindowsFormsApp1
         }
         private void CalcSizeMovesCount()
         {
-            for (int indexSizeFrom = 0; indexSizeFrom <= 21 - 1; indexSizeFrom++)
+            for (int indexSizeFrom = 0; indexSizeFrom < Sizes.Length - 1; indexSizeFrom++)
             {
-                int SizeFrom = Sizes[indexSizeFrom];
-                int SizeTo = Sizes[indexSizeFrom + 1];
-                SizeMovesCount[SizeFrom, SizeTo] += 1;
+                double dSizeFrom = Sizes[indexSizeFrom];
+                double  dSizeTo = Sizes[indexSizeFrom + 1];
+                if (dSizeFrom!=-9 && dSizeTo!=-9 && dSizeFrom<100 && dSizeFrom>0)
+                {
+                    int iSizeFrom = dTOi(dSizeFrom);
+                    int iSizeTo = dTOi(dSizeTo);
+                    SizeMovesCount[iSizeFrom, iSizeTo] += 1;
+
+                }
             }
 
         }
-
+        private void InitializeSizeMovesStatistics()
+        {
+            for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
+            {
+                for (int SizeTo = 1; SizeTo < 100; SizeTo++)
+                         SizeMovesStatistics[SizeFrom, SizeTo] = 0;
+            }
+        }
         private void CalcSizeMovesStatistics()
         {
-            for (int SizeFrom = 1; SizeFrom < 10; SizeFrom++)
+            for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
             {
                 //calc total
                 int SumMoves = 0;
-                for (int SizeTo = 1; SizeTo < 10; SizeTo++)
+                for (int SizeTo = 1; SizeTo < 100; SizeTo++)
                 {
                     SumMoves += SizeMovesCount[SizeFrom, SizeTo];
                 }
 
                 //calc statistics
-                for (int SizeTo = 1; SizeTo < 10; SizeTo++)
+                for (int SizeTo = 1; SizeTo < 100; SizeTo++)
                 {
 
                     if (SumMoves > 0)
@@ -231,27 +297,35 @@ namespace WindowsFormsApp1
         }
         private void PrintSizeMovesStatistics()
         {
-            for (int SizeFrom = 1; SizeFrom < 10; SizeFrom++)
+            for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
             {
-                for (int SizeTo = 1; SizeTo < 11; SizeTo++)
+                for (int SizeTo = 1; SizeTo < 101; SizeTo++)
                 {
                     Debug.Print(SizeFrom + "," + SizeTo + "," + SizeMovesStatistics[SizeFrom, SizeTo]);
                 }
             }
 
         }
+        private void InitializeActionWithDir()
+        {
+            for (int position = 1; position < 100; position++)
+                ActionsWithDir[position] = null;
+        }
         private void SetActionWithDir()
         {
-            for (int position = 1; position < 10; position++)
+            for (int position = 1; position < 100; position++)
             {
                 for (int dir = -1; dir < 2; dir += 2)
                 {
-                    for (int Returnn = 0; Returnn <= 10; Returnn++)
+                    for (int Returnn = 0; Returnn <= 100; Returnn++)
                     {
-                        for (int abort = 0; abort <= 10; abort++)
+                        for (int abort = 0; abort <= 100; abort++)
                         {
-                            double dGain = GetGain(p_Position: position, p_dir: dir, p_Returnn: Returnn, p_abort: abort);
-                            double dLoss = dir * (abort - position) - 0.5;
+                            double dGain = GetGain(p_iPosition: position, p_dir: dir, p_Returnn: Returnn, p_abort: abort);
+                            if (dGain <= 0)  //No gain here
+                                continue;
+
+                            double dLoss = dir * (abort - position) - 5;
                             ActionWithDir CurrentAction = ActionsWithDir[position];
                             if (CurrentAction == null)
                             {
@@ -283,36 +357,56 @@ namespace WindowsFormsApp1
             }
         }
 
-  
+        private void InitializeActionsWithNoDir()
+        {
+            for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
+                ActionsWithNoDir[SizeFrom] = null;
+        }
+
         private void SetActionsWithNoDir()
         {
-            for (int SizeFrom = 1; SizeFrom < 10; SizeFrom++)
+            for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
             {
                 double expectedLossWithNoDir = 0;
                 double expectedGainWithNoDir = 0;
 
-                for (int SizeTo = 1; SizeTo < 10; SizeTo++)
+                bool bCanSet = true;
+
+                for (int SizeTo = 1; SizeTo < 100; SizeTo++)
                 {
                     double probabilityToMove = SizeMovesStatistics[SizeFrom, SizeTo];
                     if (probabilityToMove > 0)
                     {
-                        expectedLossWithNoDir += probabilityToMove * ActionsWithDir[SizeTo].maxLoss;
-                        expectedGainWithNoDir += probabilityToMove * ActionsWithDir[SizeTo].expectedGain;
+                        bCanSet = ActionsWithDir[SizeTo] != null;
+                        if (!bCanSet)
+                            break;
+                        else
+                        {
+                            expectedLossWithNoDir += probabilityToMove * ActionsWithDir[SizeTo].maxLoss;
+                            expectedGainWithNoDir += probabilityToMove * ActionsWithDir[SizeTo].expectedGain;
+                        }
                     }
 
                 }
 
-                ActionWithNoDir NoDirAction = new ActionWithNoDir();
-                NoDirAction.maxLoss = expectedLossWithNoDir;
-                NoDirAction.expectedGain = expectedGainWithNoDir;
-                ActionsWithNoDir[SizeFrom] = NoDirAction;
+                if (bCanSet)
+                {
+                    ActionWithNoDir NoDirAction = new ActionWithNoDir();
+                    NoDirAction.maxLoss = expectedLossWithNoDir;
+                    NoDirAction.expectedGain = expectedGainWithNoDir;
+                    ActionsWithNoDir[SizeFrom] = NoDirAction;
+                }
             }
         }
+        private void InitializeBestActions()
+        {
+            for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
+                BestActions[SizeFrom] = null;
+        }
 
-        
         private void SetBestActions()
         {
-            for (int SizeFrom = 1; SizeFrom < 10; SizeFrom++)
+            for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
             {
                 Action BestAction;
                 ActionWithDir BestActionWithDir = ActionsWithDir[SizeFrom];
@@ -323,8 +417,10 @@ namespace WindowsFormsApp1
                 else
                     BestAction = BestActionWithNoDir;
 
-                if (BestActionWithDir != null && BestActionWithNoDir.expectedGain != 0 &&
-                     BestActionWithDir.expectedGain + BestActionWithNoDir.maxLoss < BestActionWithNoDir.expectedGain + BestActionWithNoDir.maxLoss)
+                if (BestActionWithDir != null && BestActionWithNoDir != null && 
+                    BestActionWithNoDir.expectedGain != 0 &&
+                     BestActionWithDir.expectedGain + BestActionWithNoDir.maxLoss < 
+                     BestActionWithNoDir.expectedGain + BestActionWithNoDir.maxLoss)
                 {
                     BestAction = BestActionWithNoDir;
                 }
@@ -333,10 +429,9 @@ namespace WindowsFormsApp1
             }
         }
 
-
         private void PrintBestAction()
           {
-               for (int size = 1; size < 10; size++)
+               for (int size = 1; size < 100; size++)
                {
                     Action BestAction = BestActions[size];
 
@@ -351,30 +446,44 @@ namespace WindowsFormsApp1
 
                 }
 
-                else
-                    {
-                         Debug.Print(size + "-9,-9,-9-,-9,-9,-9");
-                    }
-               }
-          }
+                //      else
+                //          {
+                //               Debug.Print(size + "-9,-9,-9-,-9,-9,-9");
+                //          }
+            }
+        }
 
- 
 
-          private void SetGain(int p_Position, int p_dir, int p_Returnn, int p_abort, Double p_value)
+            private void SetGain(int  p_iPosition, int p_dir, int p_Returnn, int p_abort, Double p_value)
           {
-               Gain[p_Position - 1, (p_dir + 1) / 2, p_Returnn, p_abort] = p_value;
+            Gain[p_iPosition - 1, (p_dir + 1) / 2, p_Returnn, p_abort] = p_value;
           }
 
-          private void AddToGain(int p_Position, int p_dir, int p_Returnn, int p_abort, Double p_value)
+          private void AddToGain(double p_dPosition, int p_dir, int p_Returnn, int p_abort, Double p_value)
           {
-               Gain[p_Position - 1, (p_dir + 1) / 2, p_Returnn, p_abort] += p_value;
+            int iposition = dTOi(p_dPosition);
+
+            Gain[iposition - 1, (p_dir + 1) / 2, p_Returnn, p_abort] += p_value;
           }
 
-          private double GetGain(int p_Position, int p_dir, int p_Returnn, int p_abort)
+          private double GetGain(int p_iPosition, int p_dir, int p_Returnn, int p_abort)
           {
-               return Gain[p_Position - 1, (p_dir + 1) / 2, p_Returnn, p_abort];
+               return Gain[p_iPosition - 1, (p_dir + 1) / 2, p_Returnn, p_abort];
           }
-     }
+
+          private int dTOi(double p_dValue)
+            {
+            int iValue = (int)Math.Floor(p_dValue);
+            if (iValue < 0)
+                iValue = 0;
+            if (iValue > 100)
+                iValue = 100;
+            return iValue;
+
+
+            }
+    }
+
 
      public class ActionWithNoDir : Action
      {

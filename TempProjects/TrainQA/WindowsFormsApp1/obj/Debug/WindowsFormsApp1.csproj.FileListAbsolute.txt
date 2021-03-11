@@ -24,3 +24,4 @@ C:\Users\Oren\Desktop\Projects\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj
 C:\Users\Oren\Desktop\Projects\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\Oren\Desktop\Projects\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\Oren\Desktop\Projects\Git\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csprojAssemblyReference.cache
