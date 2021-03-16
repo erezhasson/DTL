@@ -1,0 +1,9 @@
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\TrainQA.csprojAssemblyReference.cache
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\DTLExpert.Form1.resources
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\TrainQA.csproj.GenerateResource.cache
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\TrainQA.csproj.CoreCompileInputs.cache
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb

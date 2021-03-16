@@ -1,5 +1,5 @@
 ﻿
-namespace DTLAgent
+namespace DTLExpert
 {
     partial class Form1
     {

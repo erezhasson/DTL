@@ -1,11 +1,12 @@
-﻿using System;
+﻿using DTLExpert.Events;
+using DTLExpert.Models;
+using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace DTLAgent
+namespace DTLExpert
 {
-    public delegate void JobTrainProgressTickDelegate(int iCountDone, int iCountTotal);
-
+ 
     public class clsJobTrain
     {
   
@@ -617,26 +618,7 @@ namespace DTLAgent
     }
 
 
-    public class ActionWithNoDir : Action
-    {
-        public ActionWithNoDir()
-        {
-            dir = 0;
-        }
-    }
-
-    public class ActionWithDir : Action
-    {
-        public int returnn;
-        public int abort;
-    }
-
-    public class Action
-    {
-        public int dir;
-        public double expectedGain;
-        public double maxLoss;
-    }
+   
 }
 
 
