@@ -1,5 +1,5 @@
 ﻿
-namespace WindowsFormsApp1
+namespace DTLAgent
 {
     partial class Form1
     {
@@ -29,20 +29,21 @@ namespace WindowsFormsApp1
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnGo = new System.Windows.Forms.Button();
+            this.btnTrain = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.lblPB = new System.Windows.Forms.Label();
+            this.chkRecalcGains = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // btnGo
+            // btnTrain
             // 
-            this.btnGo.Location = new System.Drawing.Point(287, 72);
-            this.btnGo.Name = "btnGo";
-            this.btnGo.Size = new System.Drawing.Size(75, 23);
-            this.btnGo.TabIndex = 0;
-            this.btnGo.Text = "Go";
-            this.btnGo.UseVisualStyleBackColor = true;
-            this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
+            this.btnTrain.Location = new System.Drawing.Point(52, 12);
+            this.btnTrain.Name = "btnTrain";
+            this.btnTrain.Size = new System.Drawing.Size(75, 23);
+            this.btnTrain.TabIndex = 0;
+            this.btnTrain.Text = "Train";
+            this.btnTrain.UseVisualStyleBackColor = true;
+            this.btnTrain.Click += new System.EventHandler(this.btnTrain_Click);
             // 
             // progressBar1
             // 
@@ -63,14 +64,25 @@ namespace WindowsFormsApp1
             this.lblPB.TabIndex = 2;
             this.lblPB.Text = "1/100";
             // 
+            // chkRecalcGains
+            // 
+            this.chkRecalcGains.AutoSize = true;
+            this.chkRecalcGains.Location = new System.Drawing.Point(52, 41);
+            this.chkRecalcGains.Name = "chkRecalcGains";
+            this.chkRecalcGains.Size = new System.Drawing.Size(105, 17);
+            this.chkRecalcGains.TabIndex = 3;
+            this.chkRecalcGains.Text = "chkRecalcGains";
+            this.chkRecalcGains.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.chkRecalcGains);
             this.Controls.Add(this.lblPB);
             this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.btnGo);
+            this.Controls.Add(this.btnTrain);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -80,9 +92,10 @@ namespace WindowsFormsApp1
 
         #endregion
 
-        private System.Windows.Forms.Button btnGo;
+        private System.Windows.Forms.Button btnTrain;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label lblPB;
+        private System.Windows.Forms.CheckBox chkRecalcGains;
     }
 }
 
