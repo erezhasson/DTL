@@ -137,11 +137,11 @@ namespace DTLExpert
   
                 double dposition = inSizes[iSize];
                 int iposition = dTOi(dposition);
-                for (int dir = -1; dir < 2; dir += 2)
+                 for(int dir = -1; dir < 2; dir += 2)
                 {
                     for (int Returnn = 0; Returnn <= 100; Returnn++)
                     {
-                        for (int abort = 0; abort <= 100; abort++)
+                         for (int abort = 0; abort <= 100; abort++)
                         {
                             if ((dir == 1 && Returnn > iposition && abort < iposition)
                                 || (dir == -1 && Returnn < iposition && abort > iposition))
@@ -495,7 +495,7 @@ namespace DTLExpert
 
         private void PrintBestPositionAction()
         {
-            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\BestPosition.csv";
+            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\BestPositionAction.csv";
 
             using (var stream = File.CreateText(file))
             {
@@ -534,7 +534,7 @@ namespace DTLExpert
         {
             for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
             {
-                Action BestAction;
+                Action BestAction=null;
                 ActionWithDir BestActionWithDir = ActionsWithDir[SizeFrom];
                 ActionWithNoDir BestActionWithNoDir = ActionsWithNoDir[SizeFrom];
 
@@ -544,15 +544,20 @@ namespace DTLExpert
                     BestAction = BestActionWithNoDir;
 
                 if (BestActionWithDir != null && BestActionWithNoDir != null &&
-                    BestActionWithNoDir.expectedGain < 0 &&
                      BestActionWithDir.expectedGain  <
                      BestActionWithNoDir.expectedGain )
                 {
                     BestAction = BestActionWithNoDir;
                 }
 
-                
-                BestAbortActions[SizeFrom] = BestAction;
+                if (BestAction != null)
+                {
+                    BestAction.expectedGain += 5;
+                    BestAction.maxLoss += 5;
+                }
+
+                if (BestAction.expectedGain<0)
+                    BestAbortActions[SizeFrom] = BestAction;
             }
         }
 

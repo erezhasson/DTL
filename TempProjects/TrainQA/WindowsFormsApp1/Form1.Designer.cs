@@ -33,6 +33,16 @@ namespace DTLExpert
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.lblPB = new System.Windows.Forms.Label();
             this.chkRecalcGains = new System.Windows.Forms.CheckBox();
+            this.btnAdvise = new System.Windows.Forms.Button();
+            this.Dir = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtDir = new System.Windows.Forms.TextBox();
+            this.txtPosition = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtAdvisedDir = new System.Windows.Forms.TextBox();
+            this.txtAdvisedAbort = new System.Windows.Forms.TextBox();
+            this.txtAdvisedReturn = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnTrain
@@ -74,11 +84,102 @@ namespace DTLExpert
             this.chkRecalcGains.Text = "chkRecalcGains";
             this.chkRecalcGains.UseVisualStyleBackColor = true;
             // 
+            // btnAdvise
+            // 
+            this.btnAdvise.Location = new System.Drawing.Point(237, 12);
+            this.btnAdvise.Name = "btnAdvise";
+            this.btnAdvise.Size = new System.Drawing.Size(75, 23);
+            this.btnAdvise.TabIndex = 4;
+            this.btnAdvise.Text = "Advise";
+            this.btnAdvise.UseVisualStyleBackColor = true;
+            this.btnAdvise.Click += new System.EventHandler(this.btnAdvise_Click);
+            // 
+            // Dir
+            // 
+            this.Dir.AutoSize = true;
+            this.Dir.Location = new System.Drawing.Point(234, 38);
+            this.Dir.Name = "Dir";
+            this.Dir.Size = new System.Drawing.Size(20, 13);
+            this.Dir.TabIndex = 5;
+            this.Dir.Text = "Dir";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(234, 54);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Position";
+            // 
+            // txtDir
+            // 
+            this.txtDir.Location = new System.Drawing.Point(316, 38);
+            this.txtDir.Name = "txtDir";
+            this.txtDir.Size = new System.Drawing.Size(100, 20);
+            this.txtDir.TabIndex = 7;
+            // 
+            // txtPosition
+            // 
+            this.txtPosition.Location = new System.Drawing.Point(316, 54);
+            this.txtPosition.Name = "txtPosition";
+            this.txtPosition.Size = new System.Drawing.Size(100, 20);
+            this.txtPosition.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(234, 79);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(39, 13);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Return";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(234, 101);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(32, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Abort";
+            // 
+            // txtAdvisedDir
+            // 
+            this.txtAdvisedDir.Location = new System.Drawing.Point(435, 39);
+            this.txtAdvisedDir.Name = "txtAdvisedDir";
+            this.txtAdvisedDir.Size = new System.Drawing.Size(100, 20);
+            this.txtAdvisedDir.TabIndex = 11;
+            // 
+            // txtAdvisedAbort
+            // 
+            this.txtAdvisedAbort.Location = new System.Drawing.Point(435, 88);
+            this.txtAdvisedAbort.Name = "txtAdvisedAbort";
+            this.txtAdvisedAbort.Size = new System.Drawing.Size(100, 20);
+            this.txtAdvisedAbort.TabIndex = 14;
+            // 
+            // txtAdvisedReturn
+            // 
+            this.txtAdvisedReturn.Location = new System.Drawing.Point(435, 72);
+            this.txtAdvisedReturn.Name = "txtAdvisedReturn";
+            this.txtAdvisedReturn.Size = new System.Drawing.Size(100, 20);
+            this.txtAdvisedReturn.TabIndex = 13;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txtAdvisedAbort);
+            this.Controls.Add(this.txtAdvisedReturn);
+            this.Controls.Add(this.txtAdvisedDir);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtPosition);
+            this.Controls.Add(this.txtDir);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.Dir);
+            this.Controls.Add(this.btnAdvise);
             this.Controls.Add(this.chkRecalcGains);
             this.Controls.Add(this.lblPB);
             this.Controls.Add(this.progressBar1);
@@ -96,6 +197,16 @@ namespace DTLExpert
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label lblPB;
         private System.Windows.Forms.CheckBox chkRecalcGains;
+        private System.Windows.Forms.Button btnAdvise;
+        private System.Windows.Forms.Label Dir;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtDir;
+        private System.Windows.Forms.TextBox txtPosition;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtAdvisedDir;
+        private System.Windows.Forms.TextBox txtAdvisedAbort;
+        private System.Windows.Forms.TextBox txtAdvisedReturn;
     }
 }
 

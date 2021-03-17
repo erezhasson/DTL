@@ -52,6 +52,7 @@
     <Compile Include="Models\Action.cs" />
     <Compile Include="Models\ActionWithDir.cs" />
     <Compile Include="Models\ActionWithNoDir.cs" />
+    <Compile Include="Models\State.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

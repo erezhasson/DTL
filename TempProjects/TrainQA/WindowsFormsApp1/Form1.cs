@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTLExpert.Models;
+using System;
 
 using System.IO;
 
@@ -12,7 +13,7 @@ namespace DTLExpert
         {
             InitializeComponent();
         }
-
+        clsDTLAdvisor Advisor;
         private void btnTrain_Click(object sender, EventArgs e)
         {
             //Get sizes data
@@ -57,6 +58,38 @@ namespace DTLExpert
             lblPB.Text = iCountDone.ToString() + "/" + iCountTotal.ToString();
             Application.DoEvents();
 
+
+        }
+
+        private void btnAdvise_Click(object sender, EventArgs e)
+        {
+            if ( Advisor==null)
+                Advisor = new clsDTLAdvisor();
+            State CurrState = new State(int.Parse(txtDir.Text), int.Parse(txtPosition.Text));
+            Action outAction = Advisor.Advise(CurrState);
+            if (outAction != null)
+            {
+                txtAdvisedDir.Text = outAction.dir.ToString();
+                if (outAction.dir != 0)
+                {
+                    ActionWithDir outActionWithDir = (ActionWithDir)outAction;
+                    txtAdvisedReturn.Text = outActionWithDir.returnn.ToString();
+                    txtAdvisedAbort.Text = outActionWithDir.abort.ToString();
+                }
+                else
+                {
+                    txtAdvisedReturn.Text = "";
+                    txtAdvisedAbort.Text = "";
+                }
+            }
+            else
+            {
+                txtAdvisedDir.Text = "None";
+                txtAdvisedReturn.Text = "";
+                txtAdvisedAbort.Text = "";
+            }
+
+   
 
         }
     }
