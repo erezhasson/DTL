@@ -16,10 +16,10 @@ namespace DTLExpert
         int[,] SizeMovesCount = new int[100, 101]; //Position1-99, Position1-100
         int[,,] tmpLastCalcIndexInArray = new int[101, 101, 101]; //Position0-100, Return 0-100, Abort 0-100
         double[,] SizeMovesStatistics = new Double[100, 101]; //Position1-99, Position1-100
-        ActionWithDir[] ActionsWithDir = new ActionWithDir[100]; //Position1-99
-        ActionWithNoDir[] ActionsWithNoDir = new ActionWithNoDir[100]; //Position1-99
-        public Action[] BestPositionActions = new Action[100]; //Position1-99
-        public Action[] BestAbortActions = new Action[100]; //Position1-99
+        FromOrbitToPoitionAdvice[] FromOrbitToPoitionAdvice = new FromOrbitToPoitionAdvice[100]; //Position1-99
+        FromOrbitToWaitAdvice[] FromOrbitToWaitAdvice = new FromOrbitToWaitAdvice[100]; //Position1-99
+        public FromOrbitToAdvice[] BestFromOrbitAdvice = new FromOrbitToAdvice[100]; //Position1-99
+        public FromPositionToAdvice[,] BestFromPositionToAdvice = new FromPositionToAdvice[100,2]; //Position1-99, dir {-1,1}
 
         public void  Go(bool bRecalcGains)
         {
@@ -42,22 +42,22 @@ namespace DTLExpert
             CalcSizeMovesStatistics();
             PrintSizeMovesStatistics();
 
-            /* ActionWithDir  ActionWithDir */
-            InitializeActionWithDir();
-            SetActionWithDir();
-            PrintActionWithDir();
-            InitializeActionsWithNoDir();
-            SetActionsWithNoDir();
-            PrintActionWithNoDir();
+            /* FromOrbitToPoitionAdvice  FromOrbitToPoitionAdvice */
+            InitializeFromOrbitToPoitionAdvice();
+            SetFromOrbitToPoitionAdvice();
+            PrintFromOrbitToPoitionAdvice();
+            InitializeFromOrbitToWaitAdvice();
+            SetFromOrbitToWaitAdvice();
+            PrintFromOrbitToWaitAdvice();
 
-            /* BestPositionActions   BestAbortActions*/
+            /* BestFromOrbitAdvice   BestFromPositionToAdvice*/
 
-            InitializeBestPositionActions();
-            SetBestPositionActions();
-            PrintBestPositionAction();
-            InitializeBestAbortActions();
-            SetBestAbortActions();
-            PrintBestAbortAction();
+            InitializeBestFromOrbitAdvice();
+            SetBestFromOrbitAdvice();
+            PrintBestPositionFromOrbitTo();
+            InitializeBestFromPositionToAdvice();
+            SetBestFromPositionToAdvice();
+            PrintBestFromPositionToAdvice();
         }
 
         private void GetGainsData()
@@ -333,12 +333,12 @@ namespace DTLExpert
             }
 
         }
-        private void InitializeActionWithDir()
+        private void InitializeFromOrbitToPoitionAdvice()
         {
             for (int position = 1; position < 100; position++)
-                ActionsWithDir[position] = null;
+                FromOrbitToPoitionAdvice[position] = null;
         }
-        private void SetActionWithDir()
+        private void SetFromOrbitToPoitionAdvice()
         {
             for (int position = 1; position < 100; position++)
             {
@@ -352,27 +352,27 @@ namespace DTLExpert
                                 p_Returnn: Returnn, p_abort: abort);
   
                             double dLoss = dir * (abort - position) - 5;
-                            ActionWithDir CurrentAction = ActionsWithDir[position];
-                            if (CurrentAction == null)
+                            FromOrbitToPoitionAdvice CurrentFromOrbitTo = FromOrbitToPoitionAdvice[position];
+                            if (CurrentFromOrbitTo == null)
                             {
-                                ActionWithDir newAction = new ActionWithDir();
-                                ActionsWithDir[position] = newAction;
-                                newAction.dir = dir;
-                                newAction.returnn = Returnn;
-                                newAction.abort = abort;
-                                newAction.expectedGain = dGain;
-                                newAction.maxLoss = dLoss;
+                                FromOrbitToPoitionAdvice newFromOrbitTo = new FromOrbitToPoitionAdvice();
+                                FromOrbitToPoitionAdvice[position] = newFromOrbitTo;
+                                newFromOrbitTo.dir = dir;
+                                newFromOrbitTo.returnn = Returnn;
+                                newFromOrbitTo.abort = abort;
+                                newFromOrbitTo.expectedGain = dGain;
+                                newFromOrbitTo.maxLoss = dLoss;
                             }
                             else
                             {
-                                if (dGain > CurrentAction.expectedGain ||
-                                    (dGain == CurrentAction.expectedGain && dLoss < CurrentAction.maxLoss))
+                                if (dGain > CurrentFromOrbitTo.expectedGain ||
+                                    (dGain == CurrentFromOrbitTo.expectedGain && dLoss < CurrentFromOrbitTo.maxLoss))
                                 {
-                                    CurrentAction.dir = dir;
-                                    CurrentAction.returnn = Returnn;
-                                    CurrentAction.abort = abort;
-                                    CurrentAction.expectedGain = dGain;
-                                    CurrentAction.maxLoss = dLoss;
+                                    CurrentFromOrbitTo.dir = dir;
+                                    CurrentFromOrbitTo.returnn = Returnn;
+                                    CurrentFromOrbitTo.abort = abort;
+                                    CurrentFromOrbitTo.expectedGain = dGain;
+                                    CurrentFromOrbitTo.maxLoss = dLoss;
 
                                 }
 
@@ -383,33 +383,33 @@ namespace DTLExpert
             }
         }
 
-        private void PrintActionWithDir()
+        private void PrintFromOrbitToPoitionAdvice()
         {
-            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\ActionWithDir.csv";
+            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\FromOrbitToPoitionAdvice.csv";
             using (var stream = File.CreateText(file))
             {
                 stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", "Size", "Dir", "Returnn",
                  "Abort", "ExpectedGain", "MaxLoss"));
                 for (int position = 1; position < 100; position++)
                 {
-                    ActionWithDir ActionWithDir = ActionsWithDir[position];
-                    if (ActionWithDir != null)
-                        stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", position, ActionWithDir.dir,
-                            ActionWithDir.returnn, ActionWithDir.abort, ActionWithDir.expectedGain,
-                            ActionWithDir.maxLoss));
+                    FromOrbitToPoitionAdvice _FromOrbitToPoitionAdvice = FromOrbitToPoitionAdvice[position];
+                    if (_FromOrbitToPoitionAdvice != null)
+                        stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", position, _FromOrbitToPoitionAdvice.dir,
+                            _FromOrbitToPoitionAdvice.returnn, _FromOrbitToPoitionAdvice.abort, _FromOrbitToPoitionAdvice.expectedGain,
+                            _FromOrbitToPoitionAdvice.maxLoss));
                 }
 
             }
 
         }
 
-        private void InitializeActionsWithNoDir()
+        private void InitializeFromOrbitToWaitAdvice()
         {
             for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
-                ActionsWithNoDir[SizeFrom] = null;
+                FromOrbitToWaitAdvice[SizeFrom] = null;
         }
 
-        private void SetActionsWithNoDir()
+        private void SetFromOrbitToWaitAdvice()
         {
             for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
             {
@@ -423,13 +423,13 @@ namespace DTLExpert
                     double probabilityToMove = SizeMovesStatistics[SizeFrom, SizeTo];
                     if (probabilityToMove > 0)
                     {
-                        bCanSet = ActionsWithDir[SizeTo] != null;
+                        bCanSet = FromOrbitToPoitionAdvice[SizeTo] != null;
                         if (!bCanSet)
                             break;
                         else
                         {
-                            expectedLossWithNoDir += probabilityToMove * ActionsWithDir[SizeTo].maxLoss;
-                            expectedGainWithNoDir += probabilityToMove * ActionsWithDir[SizeTo].expectedGain;
+                            expectedLossWithNoDir += probabilityToMove * FromOrbitToPoitionAdvice[SizeTo].maxLoss;
+                            expectedGainWithNoDir += probabilityToMove * FromOrbitToPoitionAdvice[SizeTo].expectedGain;
                         }
                     }
 
@@ -437,65 +437,67 @@ namespace DTLExpert
 
                 if (bCanSet)
                 {
-                    ActionWithNoDir NoDirAction = new ActionWithNoDir();
-                    NoDirAction.maxLoss = expectedLossWithNoDir;
-                    NoDirAction.expectedGain = expectedGainWithNoDir;
-                    ActionsWithNoDir[SizeFrom] = NoDirAction;
+                    FromOrbitToWaitAdvice NoDirFromOrbitTo = new FromOrbitToWaitAdvice();
+                    NoDirFromOrbitTo.maxLoss = expectedLossWithNoDir;
+                    NoDirFromOrbitTo.expectedGain = expectedGainWithNoDir;
+                    FromOrbitToWaitAdvice[SizeFrom] = NoDirFromOrbitTo;
                 }
             }
         }
-        private void PrintActionWithNoDir()
+        private void PrintFromOrbitToWaitAdvice()
         {
-            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\ActionWithNoDir.csv";
+            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\FromOrbitToWaitAdvice.csv";
             using (var stream = File.CreateText(file))
             {
                 stream.WriteLine(string.Format("{0},{1},{2},{3}", "Size", "Dir", "ExpectedGain", "MaxLoss"));
                 for (int position = 1; position < 100; position++)
                 {
-                    ActionWithNoDir ActionWithNoDir = ActionsWithNoDir[position];
-                    if (ActionWithNoDir != null)
-                        stream.WriteLine(string.Format("{0},{1},{2},{3}", position, ActionWithNoDir.dir,
-                            ActionWithNoDir.expectedGain,
-                            ActionWithNoDir.maxLoss));
+                    FromOrbitToWaitAdvice _FromOrbitToWaitAdvice = FromOrbitToWaitAdvice[position];
+                    if (_FromOrbitToWaitAdvice != null)
+                        stream.WriteLine(string.Format("{0},{1},{2},{3}", position, _FromOrbitToWaitAdvice.dir,
+                            _FromOrbitToWaitAdvice.expectedGain,
+                            _FromOrbitToWaitAdvice.maxLoss));
                 }
 
             }
 
         }
-        private void InitializeBestPositionActions()
+        private void InitializeBestFromOrbitAdvice()
         {
             for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
-                BestPositionActions[SizeFrom] = null;
+                BestFromOrbitAdvice[SizeFrom] = null;
         }
 
-        private void SetBestPositionActions()
+        private void SetBestFromOrbitAdvice()
         {
+            // if Wait advisse we lead to better gains than
+            // position advise use wait
             for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
             {
-                Action BestAction;
-                ActionWithDir BestActionWithDir = ActionsWithDir[SizeFrom];
-                ActionWithNoDir BestActionWithNoDir = ActionsWithNoDir[SizeFrom];
+                FromOrbitToAdvice _BestFromOrbitTo;
+                FromOrbitToPoitionAdvice BestFromOrbitToAdvice = FromOrbitToPoitionAdvice[SizeFrom];
+                FromOrbitToWaitAdvice BestFromOrbitToWaitAdvice = FromOrbitToWaitAdvice[SizeFrom];
 
-                if (BestActionWithDir != null)
-                    BestAction = BestActionWithDir;
+                if (BestFromOrbitToAdvice != null)
+                    _BestFromOrbitTo = BestFromOrbitToAdvice;
                 else
-                    BestAction = BestActionWithNoDir;
+                    _BestFromOrbitTo = BestFromOrbitToWaitAdvice;
 
-                if (BestActionWithDir != null && BestActionWithNoDir != null &&
-                    BestActionWithNoDir.expectedGain >0 &&
-                     BestActionWithDir.expectedGain + BestActionWithNoDir.maxLoss <
-                     BestActionWithNoDir.expectedGain + BestActionWithNoDir.maxLoss)
+                if (BestFromOrbitToAdvice != null && BestFromOrbitToWaitAdvice != null &&
+                    BestFromOrbitToWaitAdvice.expectedGain >0 &&
+                     BestFromOrbitToAdvice.expectedGain + BestFromOrbitToWaitAdvice.maxLoss <
+                     BestFromOrbitToWaitAdvice.expectedGain + BestFromOrbitToWaitAdvice.maxLoss)
                 {
-                    BestAction = BestActionWithNoDir;
+                    _BestFromOrbitTo = BestFromOrbitToWaitAdvice;
                 }
 
-                BestPositionActions[SizeFrom] = BestAction;
+                BestFromOrbitAdvice[SizeFrom] = _BestFromOrbitTo;
             }
         }
 
-        private void PrintBestPositionAction()
+        private void PrintBestPositionFromOrbitTo()
         {
-            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\BestPositionAction.csv";
+            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\BestPositionFromOrbitTo.csv";
 
             using (var stream = File.CreateText(file))
             {
@@ -505,17 +507,17 @@ namespace DTLExpert
 
                 for (int size = 1; size < 100; size++)
                 {
-                    Action BestAction = BestPositionActions[size];
+                    FromOrbitToAdvice BestFromOrbitTo = BestFromOrbitAdvice[size];
 
-                    if (BestAction != null)
+                    if (BestFromOrbitTo != null)
                     {
-                        if (BestAction.dir != 0)
-                            stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", size, BestAction.dir, ((ActionWithDir)BestAction).returnn,
-                              ((ActionWithDir)BestAction).abort, BestAction.expectedGain,BestAction.maxLoss));
+                        if (BestFromOrbitTo.dir != 0)
+                            stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", size, BestFromOrbitTo.dir, ((FromOrbitToPoitionAdvice)BestFromOrbitTo).returnn,
+                              ((FromOrbitToPoitionAdvice)BestFromOrbitTo).abort, BestFromOrbitTo.expectedGain,BestFromOrbitTo.maxLoss));
 
                           else
-                            stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", size, BestAction.dir, -9,
-                              -9, BestAction.expectedGain, BestAction.maxLoss));
+                            stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", size, BestFromOrbitTo.dir, -9,
+                              -9, BestFromOrbitTo.expectedGain, BestFromOrbitTo.maxLoss));
 
                     }
 
@@ -524,91 +526,97 @@ namespace DTLExpert
             }
         }
 
-        private void InitializeBestAbortActions()
+        private void InitializeBestFromPositionToAdvice()
         {
             for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
-                BestAbortActions[SizeFrom] = null;
+                for (int Dir=-1;Dir<2;Dir+=2)
+                BestFromPositionToAdvice[SizeFrom,StaticFunctions.DirToArrayIndex(Dir)] = null;
         }
 
-        private void SetBestAbortActions()
+        private void SetBestFromPositionToAdvice()
         {
+            //If FromOrbit-PoitionAdvice has Gain+5>0 && same dir ->hold position
+            //Else abort
+
             for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
             {
-                Action BestAction=null;
-                ActionWithDir BestActionWithDir = ActionsWithDir[SizeFrom];
-                ActionWithNoDir BestActionWithNoDir = ActionsWithNoDir[SizeFrom];
+ 
+                FromOrbitToPoitionAdvice _FromOrbitToPoitionAdvice = FromOrbitToPoitionAdvice[SizeFrom];
+    
+                if (_FromOrbitToPoitionAdvice != null && _FromOrbitToPoitionAdvice.expectedGain+5>0)
+                {
+                    FromPositionToHoldAdvice _FromPositionToHoldAdvice = new FromPositionToHoldAdvice();
+                    _FromPositionToHoldAdvice.dir = _FromOrbitToPoitionAdvice.dir;
+                    _FromPositionToHoldAdvice.returnn = _FromOrbitToPoitionAdvice.returnn;
+                    _FromPositionToHoldAdvice.abort = _FromOrbitToPoitionAdvice.abort;
+                    _FromPositionToHoldAdvice.expectedGain = _FromOrbitToPoitionAdvice.expectedGain+5;
+                    _FromPositionToHoldAdvice.maxLoss = _FromOrbitToPoitionAdvice.maxLoss + 5;
+                    BestFromPositionToAdvice[SizeFrom, StaticFunctions.DirToArrayIndex(_FromOrbitToPoitionAdvice.dir)] =
+                        _FromPositionToHoldAdvice;
+                    BestFromPositionToAdvice[SizeFrom, StaticFunctions.DirToArrayIndex(-1*_FromOrbitToPoitionAdvice.dir)] =
+                           new FromPositionToAbortAdvice();
 
-                if (BestActionWithDir != null)
-                    BestAction = BestActionWithDir;
+                }
                 else
-                    BestAction = BestActionWithNoDir;
-
-                if (BestActionWithDir != null && BestActionWithNoDir != null &&
-                     BestActionWithDir.expectedGain  <
-                     BestActionWithNoDir.expectedGain )
                 {
-                    BestAction = BestActionWithNoDir;
+                    BestFromPositionToAdvice[SizeFrom, StaticFunctions.DirToArrayIndex(_FromOrbitToPoitionAdvice.dir)] =
+                         new FromPositionToAbortAdvice();
+                    BestFromPositionToAdvice[SizeFrom, StaticFunctions.DirToArrayIndex(-1 * _FromOrbitToPoitionAdvice.dir)] =
+                           new FromPositionToAbortAdvice();
                 }
-
-                if (BestAction != null)
-                {
-                    BestAction.expectedGain += 5;
-                    BestAction.maxLoss += 5;
-                }
-
-                if (BestAction.expectedGain<0)
-                    BestAbortActions[SizeFrom] = BestAction;
-            }
+             }
         }
 
-        private void PrintBestAbortAction()
+        private void PrintBestFromPositionToAdvice()
         {
-            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\BestAbortAction.csv";
+            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\BestFromPositionToAdvice.csv";
             using (var stream = File.CreateText(file))
             {
-                stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", "Size", "Dir", "Returnn",
+                stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6}", "Size", "PositionDir", "Dir", "Returnn",
                  "Abort", "ExpectedGain", "MaxLoss"));
                 for (int size = 1; size < 100; size++)
                 {
-                    Action BestAction = BestAbortActions[size];
-
-                    if (BestAction != null)
+                    for (int Dir = -1; Dir < 2; Dir += 2)
                     {
-                        if (BestAction.dir != 0)
+                        FromPositionToAdvice _BestFromPositionTo = BestFromPositionToAdvice[size, StaticFunctions.DirToArrayIndex(Dir)];
 
-                            stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", size, BestAction.dir, ((ActionWithDir)BestAction).returnn,
-                             ((ActionWithDir)BestAction).abort, BestAction.expectedGain, BestAction.maxLoss));
-                        else
-                            stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", size, BestAction.dir, -9,
-                                -9, BestAction.expectedGain, BestAction.maxLoss));
+                        if (_BestFromPositionTo != null)
+                        {
+                            if (_BestFromPositionTo is FromPositionToHoldAdvice) //
+
+                                stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6}", size,Dir, _BestFromPositionTo.dir, ((FromPositionToHoldAdvice)_BestFromPositionTo).returnn,
+                                 ((FromPositionToHoldAdvice)_BestFromPositionTo).abort, _BestFromPositionTo.expectedGain, _BestFromPositionTo.maxLoss));
+                            else
+                                stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6}", size,Dir, _BestFromPositionTo.dir, -9,
+                                    -9, _BestFromPositionTo.expectedGain, _BestFromPositionTo.maxLoss));
+
+                        }
 
                     }
-
-                    //      else
-                    //          {
-                    //               Debug.Print(size + "-9,-9,-9-,-9,-9,-9");
-                    //          }
                 }
             }
         }
+  
 
         private void SetGain(int p_iPosition, int p_dir, int p_Returnn, int p_abort, Double p_value)
         {
-            Gain[p_iPosition - 1, (p_dir + 1) / 2, p_Returnn, p_abort] = p_value;
+            Gain[StaticFunctions.PositionToArrayIndex(p_iPosition) , StaticFunctions.DirToArrayIndex(p_dir) / 2,
+                StaticFunctions.ReturnnToArrayIndex(p_Returnn), StaticFunctions.AbortToArrayIndex(p_abort)] = p_value;
         }
 
         private void AddToGain(double p_dPosition, int p_dir, int p_Returnn, int p_abort, Double p_value)
         {
             int iposition = dTOi(p_dPosition);
 
-            Gain[iposition - 1, (p_dir + 1) / 2, p_Returnn, p_abort] += p_value;
+            Gain[StaticFunctions.PositionToArrayIndex(iposition), StaticFunctions.DirToArrayIndex(p_dir) / 2,
+                StaticFunctions.ReturnnToArrayIndex(p_Returnn), StaticFunctions.AbortToArrayIndex(p_abort)] += p_value;
         }
 
         private double GetGain(int p_iPosition, int p_dir, int p_Returnn, int p_abort)
         {
-            return Gain[p_iPosition - 1, (p_dir + 1) / 2, p_Returnn, p_abort];
+            return Gain[StaticFunctions.PositionToArrayIndex(p_iPosition), StaticFunctions. DirToArrayIndex(p_dir) / 2,
+                StaticFunctions.ReturnnToArrayIndex(p_Returnn), StaticFunctions.AbortToArrayIndex(p_abort)];
         }
-
         private int dTOi(double p_dValue)
         {
             int iValue = (int)Math.Floor(p_dValue);

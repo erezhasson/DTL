@@ -8,20 +8,20 @@ namespace DTLExpert
 {
     class clsDTLAdvisor
     {
-        Action[] BestPositionActions = new Action[100]; //Position1-99
-        Action[] BestAbortActions = new Action[100]; //Position1-99
+        FromOrbitToAdvice[] FromOrbitToAdvices = new FromOrbitToAdvice[100]; //Position1-99
+        FromPositionToAdvice[,] FromPositionToAdvices = new FromPositionToAdvice[100,2]; //Position1-99,Dir {-1,1}
 
         public clsDTLAdvisor()
         {
-            //Get trained actions
-            GetBestPositionAction();
-            GetBestAbortAction();
+            //Get trained FromOrbitTos
+            GetBestPositionFromOrbitTo();
+            GetBestFromPositionToAdvice();
 
 
         }
-        private void GetBestPositionAction()
+        private void GetBestPositionFromOrbitTo()
         {
-            string[] lines = File.ReadAllLines("D:\\Projects\\DTL\\TempProjects\\TrainQA\\BestPositionAction.csv");
+            string[] lines = File.ReadAllLines("D:\\Projects\\DTL\\TempProjects\\TrainQA\\BestPositionFromOrbitTo.csv");
             int pos = -1;
             foreach (string line in lines)
             {
@@ -40,21 +40,21 @@ namespace DTLExpert
                 double dGain = double.Parse(aValues[4]);
                 double dMaxloss = double.Parse(aValues[5]);
 
-                ActionWithDir BestPositionAction = new ActionWithDir();
-                BestPositionAction.dir = dir;
-                BestPositionAction.returnn = Returnn;
-                BestPositionAction.abort = abort;
-                BestPositionAction.expectedGain = dGain;
-                BestPositionAction.maxLoss = dMaxloss;
+                FromOrbitToPoitionAdvice _BestPositionFromOrbitTo = new FromOrbitToPoitionAdvice();
+                _BestPositionFromOrbitTo.dir = dir;
+                _BestPositionFromOrbitTo.returnn = Returnn;
+                _BestPositionFromOrbitTo.abort = abort;
+                _BestPositionFromOrbitTo.expectedGain = dGain;
+                _BestPositionFromOrbitTo.maxLoss = dMaxloss;
 
-                BestPositionActions[position] = BestPositionAction;
+                FromOrbitToAdvices[position] = _BestPositionFromOrbitTo;
 
             }
 
         }
-        private void GetBestAbortAction()
+        private void GetBestFromPositionToAdvice()
         {
-            string[] lines = File.ReadAllLines("D:\\Projects\\DTL\\TempProjects\\TrainQA\\BestAbortAction.csv");
+            string[] lines = File.ReadAllLines("D:\\Projects\\DTL\\TempProjects\\TrainQA\\BestFromPositionToAdvice.csv");
             int pos = -1;
             foreach (string line in lines)
             {
@@ -67,60 +67,73 @@ namespace DTLExpert
                 aCh[0] = ',';
                 string[] aValues = line.Split(aCh);
                 int position = int.Parse(aValues[0]);
-                int dir = int.Parse(aValues[1]);
-                int Returnn = int.Parse(aValues[2]);
-                int abort = int.Parse(aValues[3]);
-                double dGain = double.Parse(aValues[4]);
-                double dMaxloss = double.Parse(aValues[5]);
+                int PositionDir = int.Parse(aValues[1]);
+                int dir = int.Parse(aValues[2]);
+                int Returnn = int.Parse(aValues[3]);
+                int abort = int.Parse(aValues[4]);
+                double dGain = double.Parse(aValues[5]);
+                double dMaxloss = double.Parse(aValues[6]);
 
-                ActionWithDir BestAbortAction = new ActionWithDir();
-                BestAbortAction.dir = dir;
-                BestAbortAction.returnn = Returnn;
-                BestAbortAction.abort = abort;
-                BestAbortAction.expectedGain = dGain;
-                BestAbortAction.maxLoss = dMaxloss;
+                FromPositionToAdvice _BestFromPositionToAdvice;
+                if (dir==0)
+                    _BestFromPositionToAdvice = new FromPositionToAbortAdvice();
+                else
+                    _BestFromPositionToAdvice = new FromPositionToHoldAdvice();
 
-                BestAbortActions[position] = BestAbortAction;
+                _BestFromPositionToAdvice.dir = dir;
+                if (dir != 0)
+                {
+                    ((FromPositionToHoldAdvice)_BestFromPositionToAdvice).returnn = Returnn;
+                    ((FromPositionToHoldAdvice)_BestFromPositionToAdvice).abort = abort;
+                }
+                _BestFromPositionToAdvice.expectedGain = dGain;
+                _BestFromPositionToAdvice.maxLoss = dMaxloss;
+
+                FromPositionToAdvices[position, StaticFunctions.DirToArrayIndex(PositionDir)] = _BestFromPositionToAdvice;
 
             }
 
         }
 
-        public Action Advise (State inState)
+        public FromOrbitToAdvice AdviceFromOrbitTo(OrbitState inOrbitState)
         {
-            Action outAction = null;
+            FromOrbitToAdvice _FromOrbitToAdvice = null;
+            int CurrPosition = inOrbitState.position;
+             FromOrbitToAdvice BestPositionFromOrbitTo = FromOrbitToAdvices[CurrPosition];
+
+            if (BestPositionFromOrbitTo != null)
+            {
+                if (BestPositionFromOrbitTo is FromOrbitToPoitionAdvice && 
+                    BestPositionFromOrbitTo.expectedGain > 0)
+                    _FromOrbitToAdvice = BestPositionFromOrbitTo;
+                if (BestPositionFromOrbitTo is FromOrbitToWaitAdvice )
+                    _FromOrbitToAdvice = BestPositionFromOrbitTo;
+
+            }
+
+
+            return _FromOrbitToAdvice;
+
+        }
+        public FromPositionToAdvice AdviceFromPositionTo(PositionState inState)
+        {
+            FromPositionToAdvice _FromPositionToAdvice = null;
+
             int CurrPosition = inState.position;
             int CurrDir = inState.dir;
-            Action BestPositionAction = BestPositionActions[CurrPosition];
+            FromPositionToAdvice BestPositionFromPositionTo = FromPositionToAdvices[CurrPosition,StaticFunctions.DirToArrayIndex(CurrDir)];
 
-            if (CurrDir == 0) //Test entry advise
+            if (BestPositionFromPositionTo != null)
             {
-                if (BestPositionAction != null)
-                {
-                    if (BestPositionAction.expectedGain > 0)
-                        outAction = BestPositionAction;
-
-                }
-            }
-            if (CurrDir != 0) //Test update advise
-            {
-                if (BestPositionAction != null)
-                {
-                    if (BestPositionAction.dir == CurrDir && BestPositionAction.expectedGain > 0)
-                        outAction = BestPositionAction;
-                    if (BestPositionAction.dir != CurrDir)
-                        outAction = new ActionWithNoDir();
-                }
-                if (outAction == null) //no update/abort advise. Check abort
-                {
-                    Action BestAbortAction = BestAbortActions[CurrPosition];
-                    if (BestAbortAction != null && BestAbortAction.expectedGain < 0)
-                        outAction = new ActionWithNoDir();
-                }
+                if (BestPositionFromPositionTo is FromPositionToAbortAdvice)
+                    _FromPositionToAdvice =  BestPositionFromPositionTo;
+                if (BestPositionFromPositionTo is FromPositionToHoldAdvice  && BestPositionFromPositionTo.expectedGain > 0)
+                    _FromPositionToAdvice = BestPositionFromPositionTo;
 
             }
-                 
-            return outAction;
+
+
+            return _FromPositionToAdvice;
 
         }
     }

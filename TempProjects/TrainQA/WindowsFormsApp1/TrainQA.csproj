@@ -49,12 +49,17 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Action.cs" />
-    <Compile Include="Models\ActionWithDir.cs" />
-    <Compile Include="Models\ActionWithNoDir.cs" />
-    <Compile Include="Models\State.cs" />
+    <Compile Include="Models\FromPositionToAbortAdvice.cs" />
+    <Compile Include="Models\FromPositionToHoldAdvice.cs" />
+    <Compile Include="Models\FromPositionToAdvice.cs" />
+    <Compile Include="Models\FromOrbitToAdvice.cs" />
+    <Compile Include="Models\FromOrbitToPoitionAdvice.cs" />
+    <Compile Include="Models\FromOrbitToWaitAdvice.cs" />
+    <Compile Include="Models\OrbitState.cs" />
+    <Compile Include="Models\PositionState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticFunctions\StaticFunctions.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
