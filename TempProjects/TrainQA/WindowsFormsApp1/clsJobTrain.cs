@@ -13,13 +13,13 @@ namespace DTLExpert
         public event JobTrainProgressTickDelegate JobTrainProgressTick;
         public double[] inSizes;
         double[,,,] Gain = new Double[99, 2, 101, 101]; //Position1-99, dir {-1,1}, Return 0-100, Abort 0-100
-        int[,] SizeMovesCount = new int[100, 101]; //Position1-99, Position1-100
+        int[,] SizeMovesCount = new int[100, 101]; //StarSize1-99, StartSize1-100
         int[,,] tmpLastCalcIndexInArray = new int[101, 101, 101]; //Position0-100, Return 0-100, Abort 0-100
-        double[,] SizeMovesStatistics = new Double[100, 101]; //Position1-99, Position1-100
-        FromOrbitToPoitionAdvice[] FromOrbitToPoitionAdvice = new FromOrbitToPoitionAdvice[100]; //Position1-99
-        FromOrbitToWaitAdvice[] FromOrbitToWaitAdvice = new FromOrbitToWaitAdvice[100]; //Position1-99
-        public FromOrbitToAdvice[] BestFromOrbitAdvice = new FromOrbitToAdvice[100]; //Position1-99
-        public FromPositionToAdvice[,] BestFromPositionToAdvice = new FromPositionToAdvice[100,2]; //Position1-99, dir {-1,1}
+        double[,] SizeMovesStatistics = new Double[100, 101]; //StarSize1-99, StarSize1-100
+        FromOrbitToPoitionAdvice[] FromOrbitToPoitionAdvice = new FromOrbitToPoitionAdvice[100]; //StarSize1-99
+        FromOrbitToWaitAdvice[] FromOrbitToWaitAdvice = new FromOrbitToWaitAdvice[100]; //StarSize1-99
+        public FromOrbitToAdvice[] BestFromOrbitAdvice = new FromOrbitToAdvice[100]; //StarSize1-99
+        public FromPositionToAdvice[,] BestFromPositionToAdvice = new FromPositionToAdvice[100,2]; //StarSize1-99, dir {-1,1}
 
         public void  Go(bool bRecalcGains)
         {

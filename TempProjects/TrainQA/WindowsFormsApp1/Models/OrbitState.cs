@@ -4,17 +4,15 @@ using System.Text;
 
 namespace DTLExpert.Models
 {
-    class PositionState
+    class OrbitState : State
     {
-        public int dir;
-        public int position;
-        public int returnn;
-        public int abort;
+        public OrbitState(int inStarSize, double inTotalGain)
 
-        public PositionState (int inDir,int inposition)
         {
-            dir = inDir;
-            position = inposition;
+            dir = 0;
+            StarSize = inStarSize;
+            TotalGain = inTotalGain;
+
         }
     }
 }

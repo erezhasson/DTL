@@ -1,7 +1,7 @@
 ﻿
 namespace DTLExpert
 {
-    partial class Form1
+    partial class FormTesting
     {
         /// <summary>
         /// Required designer variable.
@@ -43,6 +43,7 @@ namespace DTLExpert
             this.txtAdvisedDir = new System.Windows.Forms.TextBox();
             this.txtAdvisedAbort = new System.Windows.Forms.TextBox();
             this.txtAdvisedReturn = new System.Windows.Forms.TextBox();
+            this.btnEvaluate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnTrain
@@ -165,11 +166,22 @@ namespace DTLExpert
             this.txtAdvisedReturn.Size = new System.Drawing.Size(100, 20);
             this.txtAdvisedReturn.TabIndex = 13;
             // 
-            // Form1
+            // btnEvaluate
+            // 
+            this.btnEvaluate.Location = new System.Drawing.Point(618, 12);
+            this.btnEvaluate.Name = "btnEvaluate";
+            this.btnEvaluate.Size = new System.Drawing.Size(75, 23);
+            this.btnEvaluate.TabIndex = 15;
+            this.btnEvaluate.Text = "Evaluate";
+            this.btnEvaluate.UseVisualStyleBackColor = true;
+            this.btnEvaluate.Click += new System.EventHandler(this.btnEvaluate_Click);
+            // 
+            // FormTesting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnEvaluate);
             this.Controls.Add(this.txtAdvisedAbort);
             this.Controls.Add(this.txtAdvisedReturn);
             this.Controls.Add(this.txtAdvisedDir);
@@ -184,7 +196,7 @@ namespace DTLExpert
             this.Controls.Add(this.lblPB);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnTrain);
-            this.Name = "Form1";
+            this.Name = "FormTesting";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -207,6 +219,7 @@ namespace DTLExpert
         private System.Windows.Forms.TextBox txtAdvisedDir;
         private System.Windows.Forms.TextBox txtAdvisedAbort;
         private System.Windows.Forms.TextBox txtAdvisedReturn;
+        private System.Windows.Forms.Button btnEvaluate;
     }
 }
 

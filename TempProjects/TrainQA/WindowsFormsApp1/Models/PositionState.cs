@@ -1,17 +1,32 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
+
+
 namespace DTLExpert.Models
 {
-    class OrbitState
+    class PositionState : State
     {
-        public int dir;
-        public int position;
-        public OrbitState(int inposition)
+        public double Position;
+        public int returnn;
+        public int abort;
+        public double PositionGain;
+
+
+        public PositionState(int inDir, int inStarSize, int inReturnn, int inabort, double inTotalGain)
         {
-            dir = 0;
-            position = inposition;
+            dir = inDir;
+            StarSize = inStarSize;
+
+            Position = inStarSize;
+            returnn = inReturnn;
+            abort = inabort;
+            TotalGain = inTotalGain;
+
+            PositionGain = 0;
         }
     }
 }

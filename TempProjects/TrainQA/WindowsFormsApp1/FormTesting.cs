@@ -7,18 +7,21 @@ using System.Windows.Forms;
 
 namespace DTLExpert
 {
-    public partial class Form1 : Form
+    public partial class FormTesting : Form
     {
-        public Form1()
+        public FormTesting()
         {
             InitializeComponent();
+            inSizes = GetSizesData();
         }
+        private  double[] inSizes;
+
         clsDTLAdvisor Advisor;
         private void btnTrain_Click(object sender, EventArgs e)
         {
             //Get sizes data
             clsJobTrain JobTrain = new clsJobTrain();
-            JobTrain.inSizes = GetSizesData();
+            JobTrain.inSizes = inSizes;
             JobTrain.JobTrainProgressTick += jobTrainProgressTicked;
 
             JobTrain.Go(chkRecalcGains.Checked);
@@ -74,7 +77,7 @@ namespace DTLExpert
 
             if (CurrDir != 0)
             {
-                PositionState CurrPositionState = new PositionState(CurrDir, CurrSize);
+                PositionState CurrPositionState = new PositionState(CurrDir, CurrSize,-9,-9,-9);
                 FromPositionToAdvice _FromPositionToAdvice = Advisor.AdviceFromPositionTo(CurrPositionState);
                 if (_FromPositionToAdvice is FromPositionToHoldAdvice)
                 {
@@ -94,7 +97,7 @@ namespace DTLExpert
 
             if (CurrDir == 0)
             {
-                OrbitState CurrOrbitState = new OrbitState( CurrSize);
+                OrbitState CurrOrbitState = new OrbitState( CurrSize,-9);
                 FromOrbitToAdvice _FromOrbitToAdvice = Advisor.AdviceFromOrbitTo(CurrOrbitState);
                 if (_FromOrbitToAdvice is FromOrbitToPoitionAdvice)
                 {
@@ -118,6 +121,19 @@ namespace DTLExpert
             txtAdvisedAbort.Text = AdvisedAbort;
     
    
+
+        }
+
+        private void btnEvaluate_Click(object sender, EventArgs e)
+        {
+            clsJobEvaluation JobEvaluation = new clsJobEvaluation();
+            JobEvaluation.inSizes = inSizes;
+             JobEvaluation.Go();
+
+
+
+
+            MessageBox.Show("done...");
 
         }
     }

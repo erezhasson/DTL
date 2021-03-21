@@ -98,14 +98,15 @@ namespace DTLExpert
         public FromOrbitToAdvice AdviceFromOrbitTo(OrbitState inOrbitState)
         {
             FromOrbitToAdvice _FromOrbitToAdvice = null;
-            int CurrPosition = inOrbitState.position;
-             FromOrbitToAdvice BestPositionFromOrbitTo = FromOrbitToAdvices[CurrPosition];
+            int CurrStarSize = inOrbitState.StarSize;
+             FromOrbitToAdvice BestPositionFromOrbitTo = FromOrbitToAdvices[CurrStarSize];
 
             if (BestPositionFromOrbitTo != null)
             {
                 if (BestPositionFromOrbitTo is FromOrbitToPoitionAdvice && 
                     BestPositionFromOrbitTo.expectedGain > 0)
                     _FromOrbitToAdvice = BestPositionFromOrbitTo;
+
                 if (BestPositionFromOrbitTo is FromOrbitToWaitAdvice )
                     _FromOrbitToAdvice = BestPositionFromOrbitTo;
 
@@ -119,15 +120,18 @@ namespace DTLExpert
         {
             FromPositionToAdvice _FromPositionToAdvice = null;
 
-            int CurrPosition = inState.position;
+            int CurrStarSize = inState.StarSize;
             int CurrDir = inState.dir;
-            FromPositionToAdvice BestPositionFromPositionTo = FromPositionToAdvices[CurrPosition,StaticFunctions.DirToArrayIndex(CurrDir)];
+            FromPositionToAdvice BestPositionFromPositionTo = FromPositionToAdvices[CurrStarSize,
+                StaticFunctions.DirToArrayIndex(CurrDir)];
 
             if (BestPositionFromPositionTo != null)
             {
                 if (BestPositionFromPositionTo is FromPositionToAbortAdvice)
                     _FromPositionToAdvice =  BestPositionFromPositionTo;
-                if (BestPositionFromPositionTo is FromPositionToHoldAdvice  && BestPositionFromPositionTo.expectedGain > 0)
+
+                if (BestPositionFromPositionTo is FromPositionToHoldAdvice  && 
+                    BestPositionFromPositionTo.expectedGain > 0)
                     _FromPositionToAdvice = BestPositionFromPositionTo;
 
             }
