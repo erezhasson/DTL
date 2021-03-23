@@ -1,6 +1,7 @@
 ﻿using DTLExpert.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace DTLExpert
@@ -10,89 +11,157 @@ namespace DTLExpert
     {
         public double[] inSizes;
         private  clsDTLAdvisor DTLAdvisor = new clsDTLAdvisor() ;
+        List<State> States = new List<State>();
 
         public void Go()
         {
+            evaluateAll();
+            PrintEvaluations();
+
+         }
+
+        private void evaluateAll()
+        {
             State currState = null;
-            double TotalGain = 0;
-            foreach (int Size in inSizes)
+            foreach (double Size in inSizes)
             {
                 if (currState == null)
-                    currState = new OrbitState(Size, TotalGain);
+                {
+                    currState = new OrbitState(Size, 0);
+                    States.Add(currState);
+                }
 
-
+                currState= evaluate(currState, Size);
                 if (currState is OrbitState)
                 {
-                    if (Size == -9)
-                        continue;
-
-                    currState.StarSize = Size;
-                    FromOrbitToAdvice _FromOrbitToAdvice =
-                        DTLAdvisor.AdviceFromOrbitTo((OrbitState)currState);
-                    if (_FromOrbitToAdvice is FromOrbitToWaitAdvice)
-                    {
-                        //Do nothing
-                    }
-
-                    if (_FromOrbitToAdvice is FromOrbitToPoitionAdvice)
-                    {
-                        FromOrbitToPoitionAdvice _FromOrbitToPoitionAdvice = (FromOrbitToPoitionAdvice)_FromOrbitToAdvice;
-                        int newDir = _FromOrbitToPoitionAdvice.dir;
-                        int newReturnn = _FromOrbitToPoitionAdvice.returnn;
-                        int newAbort = _FromOrbitToPoitionAdvice.abort;
-
-                        PositionState newState = new PositionState(newDir, Size, newReturnn, newAbort, TotalGain);
-                        currState = newState;
-                    }
-                    continue;
-
+                    OrbitState _OrbitState = (OrbitState)currState;
+                    States.Add(StaticFunctions.Clone(_OrbitState));
                 }
 
                 if (currState is PositionState)
                 {
-
                     PositionState _PositionState = (PositionState)currState;
-                    double prevStarSize = currState.StarSize;
-                    currState.StarSize = Size;
+                    States.Add(StaticFunctions.Clone(_PositionState));
+                }
+           }
+
+        }
+
+        public State evaluate (State currState, double StarSize)
+        {
+            currState.StarSize = StarSize;
+            if (currState is OrbitState)
+            {
+                if (StarSize == -9)
+                    return currState;
+
+                FromOrbitToAdvice _FromOrbitToAdvice =
+                    DTLAdvisor.AdviceFromOrbitTo((OrbitState)currState);
+                if (_FromOrbitToAdvice is FromOrbitToWaitAdvice)
+                {
+                    //Do nothing
+                    return currState;
+                }
+
+                if (_FromOrbitToAdvice is FromOrbitToPoitionAdvice)
+                {
+                    FromOrbitToPoitionAdvice _FromOrbitToPoitionAdvice = (FromOrbitToPoitionAdvice)_FromOrbitToAdvice;
+                    int newDir = _FromOrbitToPoitionAdvice.dir;
+                    int newReturnn = _FromOrbitToPoitionAdvice.returnn;
+                    int newAbort = _FromOrbitToPoitionAdvice.abort;
+
+                    PositionState newState = new PositionState(newDir, StarSize, 
+                        newReturnn, newAbort, currState.TotalGain-2.5);
+                    currState = newState;
+                }
+                return currState;
+
+            }
+
+            if (currState is PositionState)
+            {
+
+                PositionState _PositionState = (PositionState)currState;
+                double prevStarSize = _PositionState.StarSize;
+                currState.StarSize = StarSize;
+                int dir = _PositionState.dir;
+                int abort = _PositionState.abort;
+                int returnn = _PositionState.returnn;
 
 
-                    if (Size == -9 || Size <= 0 || Size >= 100)
+
+                if (StarSize == -9 || StarSize <= 0 || StarSize >= 100
+                    || dir * (StarSize - returnn) >= 0 || dir * (StarSize - abort) <= 0)
+                {
+                    if (StarSize != -9)
                     {
-                        if (Size != -9)
-                        {
-                            _PositionState.PositionGain += _PositionState.dir * (Size - prevStarSize);
-                            TotalGain += _PositionState.PositionGain;
-                        }
-                        OrbitState newState = new OrbitState(Size, TotalGain);
-                        currState = newState;
-
-
-                        continue;
+                        _PositionState.PositionGain += _PositionState.dir * (StarSize - prevStarSize);
+                        _PositionState.TotalGain += _PositionState.PositionGain-2.5;
                     }
+                    OrbitState newState = new OrbitState(StarSize, _PositionState.TotalGain);
+                    currState = newState;
 
 
-
-                    FromPositionToAdvice _FromPositionToAdvice =
-                        DTLAdvisor.AdviceFromPositionTo((PositionState)currState);
-                    if (_FromPositionToAdvice is FromPositionToHoldAdvice)
-                    {
-                        _PositionState.PositionGain += _PositionState.dir * (Size - prevStarSize);
-                    }
-
-                    if (_FromPositionToAdvice is FromPositionToAbortAdvice)
-                    {
-                        FromPositionToAbortAdvice _FromPositionToAbortAdvice = (FromPositionToAbortAdvice)_FromPositionToAdvice;
-                        _PositionState.PositionGain += _PositionState.dir * (Size - prevStarSize);
-                        TotalGain += _PositionState.PositionGain;
-                        OrbitState newState = new OrbitState(Size, TotalGain);
-                        currState = newState;
-                    }
-                    continue;
-
+                    return currState;
                 }
 
 
+
+                FromPositionToAdvice _FromPositionToAdvice =
+                    DTLAdvisor.AdviceFromPositionTo((PositionState)currState);
+                if (_FromPositionToAdvice is FromPositionToHoldAdvice)
+                {
+                    _PositionState.PositionGain += _PositionState.dir * (StarSize - prevStarSize);
+                }
+
+                if (_FromPositionToAdvice is FromPositionToAbortAdvice)
+                {
+                    FromPositionToAbortAdvice _FromPositionToAbortAdvice = (FromPositionToAbortAdvice)_FromPositionToAdvice;
+                    _PositionState.PositionGain += _PositionState.dir * (StarSize - prevStarSize);
+                    _PositionState.TotalGain += _PositionState.PositionGain;
+                    OrbitState newState = new OrbitState(StarSize, _PositionState.TotalGain);
+                    currState = newState;
+                }
+
+            }
+
+            return currState;
+
+
+
+        }
+
+        private void PrintEvaluations()
+        {
+            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\Evaluate.csv";
+            using (var stream = File.CreateText(file))
+            {
+                stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", "StartSize", "PositionDir", "Dir", "Returnn",
+                    "Abort",  "TotalGain"));
+
+                foreach (State _State in States)
+                {
+                    if (_State is OrbitState)
+                    {
+                        OrbitState _OrbitState = (OrbitState)_State;
+                        stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},",
+                            _OrbitState.StarSize, -9, _OrbitState.dir,
+                            -9, -9,
+                            _OrbitState.TotalGain));
+
+                    }
+                    if (_State is PositionState)
+                    {
+                        PositionState _PositionState = (PositionState)_State;
+                        stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},",
+                            _PositionState.StarSize, _PositionState.Position, _PositionState.dir,
+                            _PositionState.returnn, _PositionState.abort,
+                            _PositionState.TotalGain));
+
+                    }
+                }
             }
         }
-     }
+
+    }
 }

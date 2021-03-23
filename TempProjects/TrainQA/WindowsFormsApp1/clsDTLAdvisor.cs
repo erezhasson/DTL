@@ -40,14 +40,26 @@ namespace DTLExpert
                 double dGain = double.Parse(aValues[4]);
                 double dMaxloss = double.Parse(aValues[5]);
 
-                FromOrbitToPoitionAdvice _BestPositionFromOrbitTo = new FromOrbitToPoitionAdvice();
-                _BestPositionFromOrbitTo.dir = dir;
-                _BestPositionFromOrbitTo.returnn = Returnn;
-                _BestPositionFromOrbitTo.abort = abort;
-                _BestPositionFromOrbitTo.expectedGain = dGain;
-                _BestPositionFromOrbitTo.maxLoss = dMaxloss;
 
-                FromOrbitToAdvices[position] = _BestPositionFromOrbitTo;
+                FromOrbitToAdvice _BestFromOrbitToAdvice;
+                if (dir == 0)
+                    _BestFromOrbitToAdvice = new FromOrbitToWaitAdvice();
+                else
+                    _BestFromOrbitToAdvice = new FromOrbitToPoitionAdvice();
+
+                _BestFromOrbitToAdvice.dir = dir;
+                if (dir != 0)
+                {
+                    ((FromOrbitToPoitionAdvice)_BestFromOrbitToAdvice).returnn = Returnn;
+                    ((FromOrbitToPoitionAdvice)_BestFromOrbitToAdvice).abort = abort;
+                }
+                _BestFromOrbitToAdvice.expectedGain = dGain;
+                _BestFromOrbitToAdvice.maxLoss = dMaxloss;
+
+
+
+   
+                FromOrbitToAdvices[position] = _BestFromOrbitToAdvice;
 
             }
 
@@ -97,19 +109,28 @@ namespace DTLExpert
 
         public FromOrbitToAdvice AdviceFromOrbitTo(OrbitState inOrbitState)
         {
+            double CurrStarSize = inOrbitState.StarSize;
             FromOrbitToAdvice _FromOrbitToAdvice = null;
-            int CurrStarSize = inOrbitState.StarSize;
-             FromOrbitToAdvice BestPositionFromOrbitTo = FromOrbitToAdvices[CurrStarSize];
-
-            if (BestPositionFromOrbitTo != null)
+            if (CurrStarSize>=100 || CurrStarSize<=0)
             {
-                if (BestPositionFromOrbitTo is FromOrbitToPoitionAdvice && 
-                    BestPositionFromOrbitTo.expectedGain > 0)
-                    _FromOrbitToAdvice = BestPositionFromOrbitTo;
+                _FromOrbitToAdvice = new FromOrbitToWaitAdvice();
+                ((FromOrbitToWaitAdvice)_FromOrbitToAdvice).expectedGain = 0;
+                ((FromOrbitToWaitAdvice)_FromOrbitToAdvice).maxLoss = 0;
+             }
+            else
+             _FromOrbitToAdvice = FromOrbitToAdvices[ StaticFunctions.dTOi( CurrStarSize)];
 
-                if (BestPositionFromOrbitTo is FromOrbitToWaitAdvice )
-                    _FromOrbitToAdvice = BestPositionFromOrbitTo;
+            if (_FromOrbitToAdvice != null)
+            {
+                if (_FromOrbitToAdvice is FromOrbitToPoitionAdvice &&
+                    _FromOrbitToAdvice.expectedGain <= 0)
+                    _FromOrbitToAdvice = null; //Do not take advise
 
+
+                if (_FromOrbitToAdvice is FromOrbitToWaitAdvice )
+                    {
+                    //Do nothing. just return _FromOrbitToAdvice
+                }
             }
 
 
@@ -120,19 +141,32 @@ namespace DTLExpert
         {
             FromPositionToAdvice _FromPositionToAdvice = null;
 
-            int CurrStarSize = inState.StarSize;
+            double CurrStarSize = inState.StarSize;
             int CurrDir = inState.dir;
-            FromPositionToAdvice BestPositionFromPositionTo = FromPositionToAdvices[CurrStarSize,
-                StaticFunctions.DirToArrayIndex(CurrDir)];
 
-            if (BestPositionFromPositionTo != null)
+            if (CurrStarSize >= 100 || CurrStarSize <= 0)
             {
-                if (BestPositionFromPositionTo is FromPositionToAbortAdvice)
-                    _FromPositionToAdvice =  BestPositionFromPositionTo;
+                _FromPositionToAdvice = new FromPositionToAbortAdvice();
+                ((FromPositionToAbortAdvice)_FromPositionToAdvice).expectedGain = 0;
+                ((FromPositionToAbortAdvice)_FromPositionToAdvice).maxLoss = 0;
+            }
+            else
+                _FromPositionToAdvice = FromPositionToAdvices[StaticFunctions.dTOi(CurrStarSize),
+                            StaticFunctions.DirToArrayIndex(CurrDir)];
 
-                if (BestPositionFromPositionTo is FromPositionToHoldAdvice  && 
-                    BestPositionFromPositionTo.expectedGain > 0)
-                    _FromPositionToAdvice = BestPositionFromPositionTo;
+
+  
+            if (_FromPositionToAdvice != null)
+            {
+                if (_FromPositionToAdvice is FromPositionToAbortAdvice)
+                {
+                    //Do nothing
+                    //just return _FromPositionToAdvice
+                }
+  
+                if (_FromPositionToAdvice is FromPositionToHoldAdvice  && 
+                    _FromPositionToAdvice.expectedGain <= 0)
+                    _FromPositionToAdvice = null; //Do not take advise
 
             }
 

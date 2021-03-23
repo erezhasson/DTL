@@ -7,7 +7,7 @@ namespace DTLExpert.Models
     class State
     {
         public int dir;
-        public int StarSize;
+        public double StarSize;
         public double TotalGain;
 
 

@@ -6,7 +6,7 @@ namespace DTLExpert.Models
 {
     class OrbitState : State
     {
-        public OrbitState(int inStarSize, double inTotalGain)
+        public OrbitState(double inStarSize, double inTotalGain)
 
         {
             dir = 0;

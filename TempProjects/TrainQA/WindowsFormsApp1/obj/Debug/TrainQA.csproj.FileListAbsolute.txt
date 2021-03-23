@@ -6,3 +6,7 @@ D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\TrainQA.csproj.C
 D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
 D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\DTLExpert.FormTesting.resources
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\bin\Debug\Newtonsoft.Json.dll
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\bin\Debug\Newtonsoft.Json.xml
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\TrainQA.csprojAssemblyReference.cache
+D:\Projects\DTL\TempProjects\TrainQA\WindowsFormsApp1\obj\Debug\TrainQA.csproj.CopyComplete

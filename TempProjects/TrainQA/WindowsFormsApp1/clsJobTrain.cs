@@ -136,7 +136,7 @@ namespace DTLExpert
 
   
                 double dposition = inSizes[iSize];
-                int iposition = dTOi(dposition);
+                int iposition = StaticFunctions.dTOi(dposition);
                  for(int dir = -1; dir < 2; dir += 2)
                 {
                     for (int Returnn = 0; Returnn <= 100; Returnn++)
@@ -159,7 +159,7 @@ namespace DTLExpert
         }
         private double CalcGain(double p_dPosition, int p_dir, int p_Returnn, int p_abort, int p_StartiSize)
         {
-            int iposition = dTOi(p_dPosition);
+            int iposition = StaticFunctions.dTOi(p_dPosition);
             double dGain = 0;
 
             if (p_StartiSize > tmpLastCalcIndexInArray[iposition, p_Returnn, p_abort])
@@ -272,8 +272,8 @@ namespace DTLExpert
                 double dSizeTo = inSizes[indexSizeFrom + 1];
                 if (dSizeFrom != -9 && dSizeTo != -9 && dSizeFrom < 100 && dSizeFrom > 0)
                 {
-                    int iSizeFrom = dTOi(dSizeFrom);
-                    int iSizeTo = dTOi(dSizeTo);
+                    int iSizeFrom = StaticFunctions.dTOi(dSizeFrom);
+                    int iSizeTo = StaticFunctions.dTOi(dSizeTo);
                     SizeMovesCount[iSizeFrom, iSizeTo] += 1;
 
                 }
@@ -413,8 +413,8 @@ namespace DTLExpert
         {
             for (int SizeFrom = 1; SizeFrom < 100; SizeFrom++)
             {
-                double expectedLossWithNoDir = 0;
-                double expectedGainWithNoDir = 0;
+                double expectedLossWithWait = 0;
+                double expectedGainWithWait = 0;
 
                 bool bCanSet = true;
 
@@ -428,8 +428,8 @@ namespace DTLExpert
                             break;
                         else
                         {
-                            expectedLossWithNoDir += probabilityToMove * FromOrbitToPoitionAdvice[SizeTo].maxLoss;
-                            expectedGainWithNoDir += probabilityToMove * FromOrbitToPoitionAdvice[SizeTo].expectedGain;
+                            expectedLossWithWait += probabilityToMove * FromOrbitToPoitionAdvice[SizeTo].maxLoss;
+                            expectedGainWithWait += probabilityToMove * FromOrbitToPoitionAdvice[SizeTo].expectedGain;
                         }
                     }
 
@@ -437,10 +437,10 @@ namespace DTLExpert
 
                 if (bCanSet)
                 {
-                    FromOrbitToWaitAdvice NoDirFromOrbitTo = new FromOrbitToWaitAdvice();
-                    NoDirFromOrbitTo.maxLoss = expectedLossWithNoDir;
-                    NoDirFromOrbitTo.expectedGain = expectedGainWithNoDir;
-                    FromOrbitToWaitAdvice[SizeFrom] = NoDirFromOrbitTo;
+                    FromOrbitToWaitAdvice _FromOrbitToWaitAdvice = new FromOrbitToWaitAdvice();
+                    _FromOrbitToWaitAdvice.maxLoss = expectedLossWithWait;
+                    _FromOrbitToWaitAdvice.expectedGain = expectedGainWithWait;
+                    this.FromOrbitToWaitAdvice[SizeFrom] = _FromOrbitToWaitAdvice;
                 }
             }
         }
@@ -606,7 +606,7 @@ namespace DTLExpert
 
         private void AddToGain(double p_dPosition, int p_dir, int p_Returnn, int p_abort, Double p_value)
         {
-            int iposition = dTOi(p_dPosition);
+            int iposition = StaticFunctions.dTOi(p_dPosition);
 
             Gain[StaticFunctions.PositionToArrayIndex(iposition), StaticFunctions.DirToArrayIndex(p_dir) / 2,
                 StaticFunctions.ReturnnToArrayIndex(p_Returnn), StaticFunctions.AbortToArrayIndex(p_abort)] += p_value;
@@ -617,17 +617,7 @@ namespace DTLExpert
             return Gain[StaticFunctions.PositionToArrayIndex(p_iPosition), StaticFunctions. DirToArrayIndex(p_dir) / 2,
                 StaticFunctions.ReturnnToArrayIndex(p_Returnn), StaticFunctions.AbortToArrayIndex(p_abort)];
         }
-        private int dTOi(double p_dValue)
-        {
-            int iValue = (int)Math.Floor(p_dValue);
-            if (iValue < 0)
-                iValue = 0;
-            if (iValue > 100)
-                iValue = 100;
-            return iValue;
-
-
-        }
+        
     }
 
 

@@ -16,7 +16,7 @@ namespace DTLExpert.Models
         public double PositionGain;
 
 
-        public PositionState(int inDir, int inStarSize, int inReturnn, int inabort, double inTotalGain)
+        public PositionState(int inDir, double inStarSize, int inReturnn, int inabort, double inTotalGain)
         {
             dir = inDir;
             StarSize = inStarSize;
