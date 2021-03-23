@@ -49,6 +49,7 @@ namespace DTLExpert
 
         public State evaluate (State currState, double StarSize)
         {
+            double prevStarSize = currState.StarSize;
             currState.StarSize = StarSize;
             if (currState is OrbitState)
             {
@@ -82,7 +83,6 @@ namespace DTLExpert
             {
 
                 PositionState _PositionState = (PositionState)currState;
-                double prevStarSize = _PositionState.StarSize;
                 currState.StarSize = StarSize;
                 int dir = _PositionState.dir;
                 int abort = _PositionState.abort;
