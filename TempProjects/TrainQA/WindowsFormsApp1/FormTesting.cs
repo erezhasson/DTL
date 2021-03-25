@@ -34,7 +34,7 @@ namespace DTLExpert
 
         private double[] GetSizesData()
         {
-            string[] lines = File.ReadAllLines("D:\\Projects\\DTL\\TempProjects\\TrainQA\\SizeData.csv");
+            string[] lines = File.ReadAllLines("D:\\Projects\\DTL\\TempProjects\\TrainQA\\SizeDataShort.csv");
             double[] Sizes = new double[lines.Length - 1];
             int pos = -1;
             foreach (string line in lines)
@@ -45,9 +45,12 @@ namespace DTLExpert
                     continue; //Skip header
                 }
 
-                double dSize = -9;
-                if (Double.TryParse(line, out dSize))
-                    Sizes[pos] = dSize;
+
+                char[] aCh = new char[1];
+                aCh[0] = ',';
+                string[] aValues = line.Split(aCh);
+                double dSize = double.Parse(aValues[4]);
+                 Sizes[pos] = dSize;
                 pos++;
             }
 
@@ -129,6 +132,18 @@ namespace DTLExpert
             clsJobEvaluation JobEvaluation = new clsJobEvaluation();
             JobEvaluation.inSizes = inSizes;
              JobEvaluation.Go();
+
+
+
+
+            MessageBox.Show("done...");
+
+        }
+
+        private void btnLoadData_Click(object sender, EventArgs e)
+        {
+            clsJobLoadData JobLoadData = new clsJobLoadData();
+            JobLoadData.Go();
 
 
 

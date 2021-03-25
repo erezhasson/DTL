@@ -8,9 +8,10 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>WindowsFormsApp1</RootNamespace>
     <AssemblyName>WindowsFormsApp1</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,6 +46,7 @@
   <ItemGroup>
     <Compile Include="clsDTLAdvisor.cs" />
     <Compile Include="clsJobEvaluation.cs" />
+    <Compile Include="clsJobLoadData.cs" />
     <Compile Include="clsJobTrain.cs" />
     <Compile Include="Events\JobTrainProgressTickDelegate.cs" />
     <Compile Include="FormTesting.cs">
@@ -53,6 +55,7 @@
     <Compile Include="FormTesting.Designer.cs">
       <DependentUpon>FormTesting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataStrucs.cs" />
     <Compile Include="Models\FromPositionToAbortAdvice.cs" />
     <Compile Include="Models\FromPositionToHoldAdvice.cs" />
     <Compile Include="Models\FromPositionToAdvice.cs" />
@@ -76,7 +79,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

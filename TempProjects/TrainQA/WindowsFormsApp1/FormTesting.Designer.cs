@@ -44,11 +44,12 @@ namespace DTLExpert
             this.txtAdvisedAbort = new System.Windows.Forms.TextBox();
             this.txtAdvisedReturn = new System.Windows.Forms.TextBox();
             this.btnEvaluate = new System.Windows.Forms.Button();
+            this.btnLoadData = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnTrain
             // 
-            this.btnTrain.Location = new System.Drawing.Point(52, 12);
+            this.btnTrain.Location = new System.Drawing.Point(130, 12);
             this.btnTrain.Name = "btnTrain";
             this.btnTrain.Size = new System.Drawing.Size(75, 23);
             this.btnTrain.TabIndex = 0;
@@ -78,7 +79,7 @@ namespace DTLExpert
             // chkRecalcGains
             // 
             this.chkRecalcGains.AutoSize = true;
-            this.chkRecalcGains.Location = new System.Drawing.Point(52, 41);
+            this.chkRecalcGains.Location = new System.Drawing.Point(123, 42);
             this.chkRecalcGains.Name = "chkRecalcGains";
             this.chkRecalcGains.Size = new System.Drawing.Size(105, 17);
             this.chkRecalcGains.TabIndex = 3;
@@ -176,11 +177,22 @@ namespace DTLExpert
             this.btnEvaluate.UseVisualStyleBackColor = true;
             this.btnEvaluate.Click += new System.EventHandler(this.btnEvaluate_Click);
             // 
+            // btnLoadData
+            // 
+            this.btnLoadData.Location = new System.Drawing.Point(12, 12);
+            this.btnLoadData.Name = "btnLoadData";
+            this.btnLoadData.Size = new System.Drawing.Size(75, 23);
+            this.btnLoadData.TabIndex = 16;
+            this.btnLoadData.Text = "LoadData";
+            this.btnLoadData.UseVisualStyleBackColor = true;
+            this.btnLoadData.Click += new System.EventHandler(this.btnLoadData_Click);
+            // 
             // FormTesting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnLoadData);
             this.Controls.Add(this.btnEvaluate);
             this.Controls.Add(this.txtAdvisedAbort);
             this.Controls.Add(this.txtAdvisedReturn);
@@ -220,6 +232,7 @@ namespace DTLExpert
         private System.Windows.Forms.TextBox txtAdvisedAbort;
         private System.Windows.Forms.TextBox txtAdvisedReturn;
         private System.Windows.Forms.Button btnEvaluate;
+        private System.Windows.Forms.Button btnLoadData;
     }
 }
 
