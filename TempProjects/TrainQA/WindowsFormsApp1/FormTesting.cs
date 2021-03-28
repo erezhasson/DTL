@@ -21,7 +21,7 @@ namespace DTLExpert
         {
             //Get sizes data
             clsJobTrain JobTrain = new clsJobTrain();
-            JobTrain.inSizes = inSizes;
+            JobTrain.inSizeSamples = inSizes;
             JobTrain.JobTrainProgressTick += jobTrainProgressTicked;
 
             JobTrain.Go(chkRecalcGains.Checked);

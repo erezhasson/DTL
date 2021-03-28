@@ -101,7 +101,8 @@ namespace DTLExpert
                 _BestFromPositionToAdvice.expectedGain = dGain;
                 _BestFromPositionToAdvice.maxLoss = dMaxloss;
 
-                FromPositionToAdvices[position, StaticFunctions.DirToArrayIndex(PositionDir)] = _BestFromPositionToAdvice;
+                FromPositionToAdvices[position, StaticFunctions.DirToArrayIndex(PositionDir)] =
+                    _BestFromPositionToAdvice;
 
             }
 

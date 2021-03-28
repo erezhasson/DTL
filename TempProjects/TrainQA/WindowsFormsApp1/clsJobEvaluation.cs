@@ -16,9 +16,9 @@ namespace DTLExpert
         public void Go()
         {
             evaluateAll();
-            PrintEvaluations();
-
-         }
+            PrintEvaluationsFull();
+            PrintEvaluationsShort();
+        }
 
         private void evaluateAll()
         {
@@ -109,12 +109,13 @@ namespace DTLExpert
 
                 FromPositionToAdvice _FromPositionToAdvice =
                     DTLAdvisor.AdviceFromPositionTo((PositionState)currState);
-                if (_FromPositionToAdvice is FromPositionToHoldAdvice)
+
+                if (_FromPositionToAdvice ==null ||_FromPositionToAdvice is FromPositionToHoldAdvice )
                 {
                     _PositionState.PositionGain += _PositionState.dir * (StarSize - prevStarSize);
                 }
 
-                if (_FromPositionToAdvice is FromPositionToAbortAdvice)
+                if (_FromPositionToAdvice != null && _FromPositionToAdvice is FromPositionToAbortAdvice)
                 {
                     FromPositionToAbortAdvice _FromPositionToAbortAdvice = (FromPositionToAbortAdvice)_FromPositionToAdvice;
                     _PositionState.PositionGain += _PositionState.dir * (StarSize - prevStarSize);
@@ -131,9 +132,9 @@ namespace DTLExpert
 
         }
 
-        private void PrintEvaluations()
+        private void PrintEvaluationsFull()
         {
-            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\Evaluate.csv";
+            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\EvaluateFull.csv";
             using (var stream = File.CreateText(file))
             {
                 stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", "StartSize", "PositionDir", "Dir", "Returnn",
@@ -141,6 +142,41 @@ namespace DTLExpert
 
                 foreach (State _State in States)
                 {
+                    if (_State is OrbitState)
+                    {
+                        OrbitState _OrbitState = (OrbitState)_State;
+                        stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},",
+                            _OrbitState.StarSize, -9, _OrbitState.dir,
+                            -9, -9,
+                            _OrbitState.TotalGain));
+
+                    }
+                    if (_State is PositionState)
+                    {
+                        PositionState _PositionState = (PositionState)_State;
+                        stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},",
+                            _PositionState.StarSize, _PositionState.Position, _PositionState.dir,
+                            _PositionState.returnn, _PositionState.abort,
+                            _PositionState.TotalGain));
+
+                    }
+                }
+            }
+        }
+        private void PrintEvaluationsShort()
+        {
+            var file = @"D:\\Projects\\DTL\\TempProjects\\TrainQA\\EvaluateShort.csv";
+            int prevDir = -9;
+            using (var stream = File.CreateText(file))
+            {
+                stream.WriteLine(string.Format("{0},{1},{2},{3},{4},{5}", "StartSize", "PositionDir", "Dir", "Returnn",
+                    "Abort", "TotalGain"));
+
+                foreach (State _State in States)
+                {
+                    if (_State.dir == prevDir)
+                        continue;
+                    prevDir = _State.dir;
                     if (_State is OrbitState)
                     {
                         OrbitState _OrbitState = (OrbitState)_State;
